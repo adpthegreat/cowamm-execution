@@ -1,20 +1,4 @@
-method 1 - code that uses revm and the tycho simulation layer to simulate the cow amm helper contract trade generation 
-
-reason is for it to be in sync with every other thing, chatgpt explained we have to , initialize storage for the pool, tokens amm state in general 
-
-
-method 2 - or better still, we use binding extensions and instantiate it with web3 , then we execute the code and return the trade, and every other thing we need 
-
-
-
-
-
-
-
-
-
-
-
+https://docs.propellerheads.xyz/tycho/for-dexs/protocol-integration/execution/code-architecture 
 https://hackmd.io/vHBDLooJSkmX-GNCxy26KQ
 https://github.com/propeller-heads/tycho-simulation/blob/main/src/evm/protocol/vm/adapter_contract.rs - this is how we'll access the orderFromSellAmount in the CowAMMHelper contract and get the traded output so that we can send the details to the api, through the ABI
 
@@ -43,5 +27,25 @@ https://github.com/cowprotocol/services/tree/eb35a3c47898cf4faae24bd138073e6147c
 
 https://github.com/cowprotocol/services/blob/eb35a3c47898cf4faae24bd138073e6147c1fd54/crates/cow-amm/src/amm.rs - helper contract sdk - old one , make a new one 
 
+https://github.com/cowprotocol/services/blob/40c8526a3627596ff421aff04a20ee1832b6fb0f/crates/shared/src/interaction.rs
 
-https://github.com/cowprotocol/trading-bot/tree/main 
+ additional things to do 
+
+- deep dive into cow amm services
+
+- create an api sdk for cow amm endpoints in rust, python, golang 
+
+- create rust version of https://github.com/cowprotocol/watch-tower 
+
+
+SOLVER FLOW 
+
+//encode and return interactions for join_pool or exit_pool
+
+//return a valid jit order from sell amount using the cow amm helper module 
+
+//solver integrate interactions and probably other interactions to the generated jit order (settlement)
+
+//encode the settlement 
+
+//post it to the api using the api client and get response 

@@ -1,3 +1,4 @@
+// https://github.com/cowprotocol/services/blob/7273c526eada6c3f6eb351949048d22a3e7d520d/crates/driver/src/domain/competition/solution/encoding.rs
 use {
     anyhow::{Context, Result},
     app_data::AppDataHash,
