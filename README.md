@@ -37,6 +37,7 @@ https://github.com/cowprotocol/services/blob/40c8526a3627596ff421aff04a20ee1832b
 
 - create rust version of https://github.com/cowprotocol/watch-tower 
 
+https://github.com/cowprotocol/ethcontract-rs/tree/main/ethcontract-generate 
 
 SOLVER FLOW 
 
