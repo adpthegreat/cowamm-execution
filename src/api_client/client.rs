@@ -1,7 +1,7 @@
 // module to post orders to the API 
 use {
     anyhow::{Context, Result},
-    model::order::{OrderClass, OrderKind, OrderStatus, OrderUid, BUY_ETH_ADDRESS},
+    crate::models::order::{OrderClass, OrderKind, OrderStatus, OrderUid, BUY_ETH_ADDRESS},
     number::serialization::HexOrDecimalU256,
     primitive_types::{H160, U256},
     reqwest::Client,
@@ -58,7 +58,7 @@ impl OrderBookApi {
         struct Auction {
             orders: Vec<Order>,
         }
-        let url = shared::url::join(&self.base, "api/v1/auction");
+        let url = url::join(&self.base, "api/v1/auction");
         let auction: Auction = self
             .client
             .get(url)
@@ -71,7 +71,7 @@ impl OrderBookApi {
     }
 
     pub async fn order(&self, uid: &OrderUid) -> reqwest::Result<Order> {
-        let url = shared::url::join(&self.base, &format!("api/v1/orders/{uid}"));
+        let url = url::join(&self.base, &format!("api/v1/orders/{uid}"));
         self.client
             .get(url)
             .send()

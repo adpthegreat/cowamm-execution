@@ -2,13 +2,14 @@
 //! as described by the openapi documentation.
 
 use {
-    crate::{
+    crate::models::{
         DomainSeparator,
         TokenPair,
         interaction::InteractionData,
         quote::QuoteId,
         signature::{self, EcdsaSignature, EcdsaSigningScheme, Signature},
     },
+    crates::utils::{bytes_hex::BytesHex},
     anyhow::{Result, anyhow},
     app_data::{AppDataHash, hash_full_app_data},
     bigdecimal::BigDecimal,

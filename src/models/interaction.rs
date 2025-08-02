@@ -1,4 +1,5 @@
 use {
+    utils::hex::{FromHex, FromHexError},
     number::serialization::HexOrDecimalU256,
     primitive_types::{H160, U256},
     serde::{Deserialize, Serialize},

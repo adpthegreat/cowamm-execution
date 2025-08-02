@@ -4,7 +4,7 @@
 //! Safe in a pre-interaction).
 
 use {
-    super::{SignatureCheck, SignatureValidating, SignatureValidationError},
+    cow_amm::types::{SignatureCheck, SignatureValidating, SignatureValidationError},
     anyhow::Result,
     contracts::{ERC1271SignatureValidator, errors::EthcontractErrorType},
     ethcontract::Bytes,

@@ -20,7 +20,6 @@ use {
 ///
 /// [^1]: <https://docs.balancer.fi/concepts/math/weighted-math>
 /// [^2]: <https://docs.balancer.fi/products/balancer-pools/weighted-pools>
-/// [^3]: <https://docs.balancer.fi/products/balancer-pools/liquidity-bootstrapping-pools-lbps>
 #[derive(Clone, Debug)]
 pub struct Pool {
     pub vault: eth::ContractAddress,

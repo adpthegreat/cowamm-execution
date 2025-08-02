@@ -1,7 +1,7 @@
 //! Module defining a batch auction.
 
 use {
-    crate::order::Order,
+    crate::models::order::Order,
     number::serialization::HexOrDecimalU256,
     primitive_types::{H160, U256},
     serde::{Deserialize, Serialize},

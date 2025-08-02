@@ -1,6 +1,6 @@
 use {
     contracts::BCowPool,
-    ethcontract::{Bytes, H256},
+    ethcontract::{Bytes, H256, Address},
     primitive_types::U256,
     shared::{
         interaction::{EncodedInteraction, Interaction},
@@ -40,7 +40,7 @@ impl JoinPoolInteraction {
     }
 }
 
-impl Interaction for BalancerJoinPoolInteraction {
+impl Interaction for JoinPoolInteraction {
     fn encode(&self) -> EncodedInteraction {
         self.encode_join()
     }

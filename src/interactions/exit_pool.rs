@@ -34,7 +34,7 @@ impl ExitPoolInteraction {
     }
 }
 
-impl Interaction for BalancerExitPoolInteraction {
+impl Interaction for ExitPoolInteraction {
     fn encode(&self) -> EncodedInteraction {
         self.encode_exit()
     }

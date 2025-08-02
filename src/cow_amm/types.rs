@@ -8,7 +8,6 @@ use {
     thiserror::Error,
 };
 
-mod simulation;
 
 /// Structure used to represent a signature.
 #[derive(Clone, Debug, Eq, PartialEq)]
