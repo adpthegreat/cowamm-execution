@@ -1,16 +1,18 @@
 // https://github.com/cowprotocol/services/blob/7273c526eada6c3f6eb351949048d22a3e7d520d/crates/driver/src/domain/competition/solution/encoding.rs
 use {
     anyhow::{Context, Result},
-    app_data::AppDataHash,
     contracts::CowAmmLegacyHelper,
     ethcontract::{Address, Bytes, U256, errors::MethodError},
-    model::{
-        DomainSeparator,
-        interaction::InteractionData,
-        order::{BuyTokenDestination, OrderData, OrderKind, SellTokenSource},
-        signature::{Signature, hashed_eip712_message},
+    crate::cowamm::signature_validator::{SignatureCheck, SignatureValidating},
+    crate::shared::{
+        app_data::app_data_hash::AppDataHash,
+        models::{
+            DomainSeparator,
+            interaction::InteractionData,
+            order::{BuyTokenDestination, OrderData, OrderKind, SellTokenSource},
+            signature::{Signature, hashed_eip712_message},
+        }
     },
-    shared::signature_validator::{SignatureCheck, SignatureValidating},
 };
 
 #[derive(Clone, Debug)]

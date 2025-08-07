@@ -2,7 +2,7 @@
 //! as described by the openapi documentation.
 
 use {
-    crate::{fee_policy::ExecutedProtocolFee, order::OrderUid},
+    crate::shared::models::{fee_policy::ExecutedProtocolFee, order::OrderUid},
     num::BigUint,
     primitive_types::{H160, H256},
     serde::Serialize,

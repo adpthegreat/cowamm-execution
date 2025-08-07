@@ -1,8 +1,8 @@
 use {
     ethcontract::Bytes,
-    ethrpc::Web3,
     hex_literal::hex,
-    model::interaction::InteractionData,
+    crate::shared::{models::interaction::InteractionData, ethrpc::Web3},
+    crate::cow_amm::signature_validator::Validator,
     primitive_types::H160,
     std::sync::Arc,
     thiserror::Error,
@@ -65,7 +65,7 @@ pub struct Contracts {
 
 /// Creates the default [`SignatureValidating`] instance.
 pub fn validator(web3: &Web3, contracts: Contracts) -> Arc<dyn SignatureValidating> {
-    Arc::new(simulation::Validator::new(
+    Arc::new(Validator::new(
         web3,
         contracts.settlement,
         contracts.vault_relayer,

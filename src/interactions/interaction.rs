@@ -2,7 +2,7 @@
 
 use crate::{
     domain::{self, eth, liquidity},
-    util::Bytes,
+    shared::utils::Bytes,
 };
 
 /// Interaction with a smart contract which is needed to execute this solution

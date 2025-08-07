@@ -9,17 +9,7 @@ use {
     itertools::Itertools,
 };
 
-/// Liquidity data tied to a Balancer V2 pool based on "Weighted Math" [^1].
-///
-/// Balancer V2 supports two kinds of pools that fall in this category:
-/// - Weighted Pools [^2]
-/// - Liquidity Bootstrapping Pools [^3]
-///
-/// Both of these pools have an identical representation, and are therefore
-/// modelled by the same type.
-///
-/// [^1]: <https://docs.balancer.fi/concepts/math/weighted-math>
-/// [^2]: <https://docs.balancer.fi/products/balancer-pools/weighted-pools>
+
 #[derive(Clone, Debug)]
 pub struct Pool {
     pub vault: eth::ContractAddress,
@@ -56,7 +46,7 @@ impl Pool {
 pub struct Reserves(Vec<Reserve>);
 
 impl Reserves {
-    /// Creates new Balancer V2 token reserves, returns `Err` if the specified
+    /// Creates new CowAMM token reserves, returns `Err` if the specified
     /// token reserves are invalid.
     pub fn try_new(reserves: Vec<Reserve>) -> Result<Self, InvalidReserves> {
         if !reserves.iter().map(|r| r.asset.token).all_unique() {
@@ -93,11 +83,11 @@ impl IntoIterator for Reserves {
 
 #[derive(Debug, thiserror::Error)]
 pub enum InvalidReserves {
-    #[error("invalid Balancer V2 token reserves; duplicate token address")]
+    #[error("CowAMM token reserves; duplicate token address")]
     DuplicateToken,
 }
 
-/// Balancer weighted pool reserve for a single token.
+/// CowAMM weighted pool reserve for a single token.
 #[derive(Clone, Copy, Debug)]
 pub struct Reserve {
     pub asset: eth::Asset,
@@ -105,7 +95,7 @@ pub struct Reserve {
     pub weight: Weight,
 }
 
-/// A Balancer token weight.
+/// A CowAMM token weight.
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Weight(pub eth::U256);
 

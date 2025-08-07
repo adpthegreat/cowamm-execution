@@ -1,5 +1,5 @@
 use {
-    number::serialization::HexOrDecimalU256,
+    crate::shared::number::serialization::HexOrDecimalU256,
     primitive_types::{H160, U256},
     serde::Serialize,
     serde_with::serde_as,

@@ -1,6 +1,8 @@
 use {
-    utils::hex::{FromHex, FromHexError},
-    crate::models::{DomainSeparator, quote::QuoteSigningScheme},
+    crate::shared::{
+        models::{DomainSeparator, quote::QuoteSigningScheme},
+        utils::hex::{FromHex, FromHexError},
+    },
     anyhow::{Context as _, Result, ensure},
     primitive_types::{H160, H256},
     serde::{Deserialize, Serialize, de},

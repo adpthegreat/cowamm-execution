@@ -1,13 +1,17 @@
 use {
-    crate::models::{
-        order::{BuyTokenDestination, OrderCreationAppData, OrderKind, SellTokenSource},
-        signature::SigningScheme,
-        time,
+    crate::{
+        shared::{
+            app_data::AppDataHash,
+            models::{
+                order::{BuyTokenDestination, OrderCreationAppData, OrderKind, SellTokenSource},
+            signature::SigningScheme,
+            time
+       }
+    }
     },
     anyhow::bail,
-    app_data::AppDataHash,
     chrono::{DateTime, Utc},
-    number::{nonzero::U256 as NonZeroU256, serialization::HexOrDecimalU256},
+    crate::shared::number::{nonzero::U256 as NonZeroU256, serialization::HexOrDecimalU256},
     primitive_types::{H160, U256},
     serde::{
         Deserialize,

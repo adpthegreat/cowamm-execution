@@ -2,9 +2,9 @@ use {
     contracts::BCowPool,
     ethcontract::{Bytes, H256, Address},
     primitive_types::U256,
-    shared::{
+    crate::{
         interaction::{EncodedInteraction, Interaction},
-        http_solver::model::TokenAmount,
+        shared::http_solver::model::TokenAmount,
     },
 };
 

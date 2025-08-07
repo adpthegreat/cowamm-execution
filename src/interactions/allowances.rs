@@ -7,12 +7,12 @@ use {
     anyhow::{anyhow, ensure, Context as _, Result},
     contracts::{dummy_contract, ERC20},
     ethcontract::{H160, U256},
-    ethrpc::Web3,
-    maplit::hashmap,
-    shared::{
+    crate::shared::{
         http_solver::model::TokenAmount,
         interaction::{EncodedInteraction, Interaction},
+        ethrpc::Web3
     },
+    maplit::hashmap,
     std::{
         collections::{HashMap, HashSet},
         slice,

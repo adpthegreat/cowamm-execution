@@ -1,7 +1,7 @@
 // https://github.com/cowprotocol/services/blob/7273c526eada6c3f6eb351949048d22a3e7d520d/crates/shared/src/interaction.rs#L3
 use {
     ethcontract::{transaction::TransactionBuilder, Bytes},
-    model::interaction::InteractionData,
+    crate::shared::models::interaction::InteractionData,
     primitive_types::{H160, U256},
     web3::Transport,
 };

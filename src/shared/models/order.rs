@@ -2,22 +2,27 @@
 //! as described by the openapi documentation.
 
 use {
-    crate::models::{
-        DomainSeparator,
-        TokenPair,
-        interaction::InteractionData,
-        quote::QuoteId,
-        signature::{self, EcdsaSignature, EcdsaSigningScheme, Signature},
+    crate::shared::{
+        models::{
+            DomainSeparator,
+            TokenPair,
+            interaction::InteractionData,
+            quote::QuoteId,
+            signature::{self, EcdsaSignature, EcdsaSigningScheme, Signature},
+        },
+        app_data::{
+            app_data,
+            app_data_hash::{AppDataHash, hash_full_app_data}
+        }, 
+        number::serialization::HexOrDecimalU256,
+        utils::{bytes_hex::BytesHex},
     },
-    crates::utils::{bytes_hex::BytesHex},
     anyhow::{Result, anyhow},
-    app_data::{AppDataHash, hash_full_app_data},
     bigdecimal::BigDecimal,
     chrono::{DateTime, offset::Utc},
     derive_more::Debug as DeriveDebug,
     hex_literal::hex,
     num::BigUint,
-    number::serialization::HexOrDecimalU256,
     primitive_types::{H160, H256, U256},
     serde::{Deserialize, Deserializer, Serialize, Serializer, de},
     serde_with::{DisplayFromStr, serde_as},

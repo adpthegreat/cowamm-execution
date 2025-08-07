@@ -1,8 +1,8 @@
 //! Module defining a batch auction.
 
 use {
-    crate::models::order::Order,
-    number::serialization::HexOrDecimalU256,
+    crate::shared::models::order::Order,
+    crate::shared::number::serialization::HexOrDecimalU256,
     primitive_types::{H160, U256},
     serde::{Deserialize, Serialize},
     serde_with::serde_as,

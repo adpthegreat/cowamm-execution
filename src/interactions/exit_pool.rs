@@ -2,8 +2,8 @@ use {
     contracts::{BCowPool, GPv2Settlement},
     ethcontract::{Bytes, H256},
     primitive_types::U256,
-    shared::{
-        http_solver::model::TokenAmount,
+    crate::{
+        shared::http_solver::model::TokenAmount,
         interaction::{EncodedInteraction, Interaction},
     },
 };

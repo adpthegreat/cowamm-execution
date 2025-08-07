@@ -1,8 +1,11 @@
 // module to post orders to the API 
 use {
     anyhow::{Context, Result},
-    crate::models::order::{OrderClass, OrderKind, OrderStatus, OrderUid, BUY_ETH_ADDRESS},
-    number::serialization::HexOrDecimalU256,
+    crate::shared::{
+        models::order::{OrderClass, OrderKind, OrderStatus, OrderUid, BUY_ETH_ADDRESS},
+        number::serialization::HexOrDecimalU256,
+        utils::url,
+    },
     primitive_types::{H160, U256},
     reqwest::Client,
     serde_with::serde_as,
