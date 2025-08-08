@@ -3,13 +3,13 @@
 //! generate interactions for them.
 
 use {
-    crate::interactions::Erc20ApproveInteraction,
+    crate::interactions::erc20::Erc20ApproveInteraction,
     anyhow::{anyhow, ensure, Context as _, Result},
     contracts::{dummy_contract, ERC20},
     ethcontract::{H160, U256},
     crate::shared::{
-        http_solver::model::TokenAmount,
         interaction::{EncodedInteraction, Interaction},
+        http_solver::model::TokenAmount,
         ethrpc::Web3
     },
     maplit::hashmap,

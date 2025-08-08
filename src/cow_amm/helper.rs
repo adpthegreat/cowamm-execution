@@ -3,7 +3,7 @@ use {
     anyhow::{Context, Result},
     contracts::CowAmmLegacyHelper,
     ethcontract::{Address, Bytes, U256, errors::MethodError},
-    crate::cowamm::signature_validator::{SignatureCheck, SignatureValidating},
+    crate::cow_amm::types::{SignatureCheck, SignatureValidating},
     crate::shared::{
         app_data::app_data_hash::AppDataHash,
         models::{

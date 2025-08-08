@@ -1,7 +1,7 @@
 use {
     crate::{
         shared::{
-            app_data::AppDataHash,
+            app_data::app_data_hash::AppDataHash,
             models::{
                 order::{BuyTokenDestination, OrderCreationAppData, OrderKind, SellTokenSource},
             signature::SigningScheme,

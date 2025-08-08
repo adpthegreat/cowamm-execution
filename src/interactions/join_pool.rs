@@ -3,8 +3,10 @@ use {
     ethcontract::{Bytes, H256, Address},
     primitive_types::U256,
     crate::{
-        interaction::{EncodedInteraction, Interaction},
-        shared::http_solver::model::TokenAmount,
+        shared::{
+            http_solver::model::TokenAmount,
+            interaction::{EncodedInteraction, Interaction},
+        },
     },
 };
 
@@ -56,7 +58,6 @@ mod tests {
     fn encode_join_pool() {
         let vault = dummy_contract!(BCowPool, [0x01; 20]);
         let interaction = JoinPoolInteraction {
-            vault: vault.clone(),
             pool_id: H256([0x02; 32]),
             sender: H160([0x03; 20]),
             recipient: H160([0x04; 20]),
@@ -69,7 +70,7 @@ mod tests {
         };
 
         let (to, value, data) = interaction.encode();
-        assert_eq!(to, vault.address());
+        assert_eq!(to, pool);
         assert_eq!(value, U256::zero());
         assert!(data.0.len() > 4); // basic sanity check
     }

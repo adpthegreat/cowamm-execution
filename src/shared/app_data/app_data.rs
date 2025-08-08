@@ -1,7 +1,10 @@
 use {
     crate::{
         shared::{
-            app_data::{AppDataHash, Hooks, app_data_hash::hash_full_app_data},
+            app_data::{
+                app_data_hash::AppDataHash, app_data_hash::hash_full_app_data,
+                hooks::Hooks
+            },
             number::serialization::HexOrDecimalU256,
         },
     },

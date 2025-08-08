@@ -3,8 +3,10 @@ use {
     ethcontract::{Bytes, H256},
     primitive_types::U256,
     crate::{
-        shared::http_solver::model::TokenAmount,
-        interaction::{EncodedInteraction, Interaction},
+        shared::{
+            interaction::{EncodedInteraction, Interaction},
+            http_solver::model::TokenAmount
+        }
     },
 };
 
@@ -50,7 +52,6 @@ mod tests {
     fn encode_join_pool() {
         let vault = dummy_contract!(BCowPool, [0x01; 20]);
         let interaction = JoinPoolInteraction {
-            vault: vault.clone(),
             pool_id: H256([0x02; 32]),
             sender: H160([0x03; 20]),
             recipient: H160([0x04; 20]),

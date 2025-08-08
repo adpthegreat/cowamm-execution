@@ -32,7 +32,7 @@ use {
         str::FromStr,
     },
     strum::{AsRefStr, EnumString, VariantNames},
-    web3::signing::{self, Key, SecretKeyRef},
+    web3::signing::{self, Key, SecretKey, SecretKeyRef},
 };
 
 /// The flag denoting that an order is buying ETH (or the chain's native token).
@@ -534,7 +534,7 @@ impl Default for OrderCancellation {
             OrderUid::default(),
             &DomainSeparator::default(),
             SecretKeyRef::new(
-                &secp256k1::SecretKey::from_str(
+                &SecretKey::from_str(
                     "0000000000000000000000000000000000000000000000000000000000000001",
                 )
                 .unwrap(),
