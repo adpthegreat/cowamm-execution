@@ -1,9 +1,32 @@
+[workspace]
+members = [
+    "app_data", 
+    "api_client",
+    "cow_amm",
+    "contracts",
+    "encoding",
+    "interactions", 
+    "utils",
+    "shared"
+]
+
 [package]
 name = "CowAMM-execution"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
+# Internal crate dependencies
+app_data = { path = "./app_data" }
+api_client = { path = "./api_client" }
+cow_amm = { path = "./cow_amm" }
+contracts = { path = "./contracts" }
+encoding = { path = "./encoding" }
+interactions = { path = "./interactions" }
+utils = { path = "./utils" }
+shared = { path = "./shared" }
+
+# External dependencies from originalclear
 alloy = "1.0.12"
 anyhow = "1.0.98"
 async-trait = "0.1.88"

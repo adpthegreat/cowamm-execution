@@ -1,0 +1,14 @@
+[package]
+name = "cow_amm"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+shared = { path = "../shared" }
+utils = { path = "../utils" }
+contracts = { path = "../contracts" }
+bigdecimal = "0.4.8"
+num = "0.4.3"
+serde = { version = "1.0.219", features = ["derive"] }
+anyhow = "1.0.98"
+primitive-types = "0.12"

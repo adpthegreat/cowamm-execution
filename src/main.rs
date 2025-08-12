@@ -1,4 +1,3 @@
-pub mod abi;
 pub mod api_client;
 pub mod cow_amm;
 // pub mod encoding;
