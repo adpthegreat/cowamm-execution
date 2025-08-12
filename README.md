@@ -57,3 +57,6 @@ SOLVER FLOW
 
 RPC API Interaction code - useful stuff tbh 
 https://github.com/cowprotocol/services/blob/c12eddc78a2b923a10d24e6832a87908509eb4a4/crates/autopilot/src/infra/blockchain/mod.rs#L48
+
+Workspace folder structure 
+https://github.com/cowprotocol/services/blob/c12eddc78a2b923a10d24e6832a87908509eb4a4/Cargo.toml#L5

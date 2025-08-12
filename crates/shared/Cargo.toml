@@ -1,0 +1,32 @@
+[package]
+name = "shared"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+default = []
+test_helpers = []
+e2e = []
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_with = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tiny-keccak = { workspace = true }
+alloy = { workspace = true }
+ethcontract = { workspace = true }
+primitive-types = { workspace = true }
+web3 = { workspace = true }
+hex = { workspace = true }
+hex-literal = { workspace = true }
+num = { workspace = true }
+bigdecimal = { workspace = true }
+derive_more = { workspace = true }
+strum = { workspace = true }
+chrono = { workspace = true }
+url = { workspace = true }
+tokio = { workspace = true }
+futures = { workspace = true }
+async-trait = { workspace = true }

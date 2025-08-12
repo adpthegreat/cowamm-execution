@@ -1,0 +1,26 @@
+[package]
+name = "contracts"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+shared = { path = "../shared" }
+ethcontract = { workspace = true }
+ethcontract-generate = "0.25.8"
+alloy = { workspace = true }
+web3 = { workspace = true }
+serde = { workspace = true }
+anyhow = { workspace = true }
+tokio = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+[build-dependencies]
+ethcontract = { workspace = true }
+ethcontract-generate = { workspace = true }
+alloy = { workspace = true }
+web3 = { workspace = true }
+serde = { workspace = true }
+anyhow = { workspace = true }
+tokio = { workspace = true }
