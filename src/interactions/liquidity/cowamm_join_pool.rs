@@ -16,7 +16,6 @@ pub struct Pool {
     pub id: Id,
     pub reserves: Reserves,
     pub fee: Fee,
-    pub version: Version,
 }
 
 impl Pool {

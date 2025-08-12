@@ -15,7 +15,9 @@ use {
             app_data_hash::{AppDataHash, hash_full_app_data}
         }, 
         number::serialization::HexOrDecimalU256,
-        utils::{bytes_hex::BytesHex},
+        utils::{
+            bytes_hex::BytesHex
+        },
     },
     anyhow::{Result, anyhow},
     bigdecimal::BigDecimal,

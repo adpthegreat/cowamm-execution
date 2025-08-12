@@ -1,6 +1,9 @@
 use {
+    hex::{FromHex, FromHexError},
     crate::shared::{
-        utils::hex::{FromHex, FromHexError},
+        utils::{
+            bytes_hex,
+        },
         number::serialization::HexOrDecimalU256
     },
     primitive_types::{H160, U256},

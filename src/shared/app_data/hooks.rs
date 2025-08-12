@@ -1,5 +1,5 @@
 use {
-    bytes_hex::BytesHex,
+    crate::shared::utils::bytes_hex::BytesHex,
     primitive_types::H160,
     serde::{Deserialize, Serialize},
     serde_with::{DisplayFromStr, serde_as},

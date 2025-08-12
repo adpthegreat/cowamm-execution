@@ -3,9 +3,11 @@
 //! generate interactions for them.
 
 use {
-    crate::interactions::erc20::Erc20ApproveInteraction,
+    crate::{
+        interactions::erc20::Erc20ApproveInteraction,
+        contracts::{dummy_contract, ERC20},
+    },
     anyhow::{anyhow, ensure, Context as _, Result},
-    contracts::{dummy_contract, ERC20},
     ethcontract::{H160, U256},
     crate::shared::{
         interaction::{EncodedInteraction, Interaction},

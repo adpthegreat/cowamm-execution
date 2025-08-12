@@ -40,7 +40,6 @@ impl Interaction {
             Interaction::Liquidity(interaction) => {
                 let address = match &interaction.liquidity.kind {
                     liquidity::Kind::CowAMM(pool) => pool.b_cow_pool.into(),
-                    liquidity::Kind::BalancerV2Stable(pool) => pool.vault.into(),
                 };
                 // As a gas optimization, we always approve the max amount possible. This
                 // minimizes the number of approvals necessary, and therefore

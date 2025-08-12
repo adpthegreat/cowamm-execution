@@ -50,3 +50,10 @@ SOLVER FLOW
 //encode the settlement 
 
 //post it to the api using the api client and get response 
+
+//DRIVER IS ENTRPOINT TO CODE 
+//https://github.com/cowprotocol/services/blob/main/crates/driver/README.md
+
+
+RPC API Interaction code - useful stuff tbh 
+https://github.com/cowprotocol/services/blob/c12eddc78a2b923a10d24e6832a87908509eb4a4/crates/autopilot/src/infra/blockchain/mod.rs#L48

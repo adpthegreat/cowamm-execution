@@ -1,8 +1,10 @@
 //! Module continaing ERC20 token interaction implementations.
 
 use {
-    crate::shared::interaction::{EncodedInteraction, Interaction},
-    contracts::ERC20,
+    crate::{
+        shared::interaction::{EncodedInteraction, Interaction},
+        contracts::ERC20
+    },
     ethcontract::Bytes,
     primitive_types::{H160, U256},
 };

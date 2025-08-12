@@ -4,7 +4,7 @@ use {
     crate::shared::{
         models::order::{OrderClass, OrderKind, OrderStatus, OrderUid, BUY_ETH_ADDRESS},
         number::serialization::HexOrDecimalU256,
-        utils::url,
+        utils::url_utils,
     },
     primitive_types::{H160, U256},
     reqwest::Client,
@@ -61,7 +61,7 @@ impl OrderBookApi {
         struct Auction {
             orders: Vec<Order>,
         }
-        let url = url::join(&self.base, "api/v1/auction");
+        let url = url_utils::join(&self.base, "api/v1/auction");
         let auction: Auction = self
             .client
             .get(url)
@@ -74,7 +74,7 @@ impl OrderBookApi {
     }
 
     pub async fn order(&self, uid: &OrderUid) -> reqwest::Result<Order> {
-        let url = url::join(&self.base, &format!("api/v1/orders/{uid}"));
+        let url = url_utils::join(&self.base, &format!("api/v1/orders/{uid}"));
         self.client
             .get(url)
             .send()

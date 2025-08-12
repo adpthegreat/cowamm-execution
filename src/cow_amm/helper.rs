@@ -1,9 +1,11 @@
 // https://github.com/cowprotocol/services/blob/7273c526eada6c3f6eb351949048d22a3e7d520d/crates/driver/src/domain/competition/solution/encoding.rs
 use {
     anyhow::{Context, Result},
-    contracts::CowAmmLegacyHelper,
     ethcontract::{Address, Bytes, U256, errors::MethodError},
-    crate::cow_amm::types::{SignatureCheck, SignatureValidating},
+    crate::{
+        contracts::CowAmmLegacyHelper,
+        cow_amm::types::{SignatureCheck, SignatureValidating}
+    },
     crate::shared::{
         app_data::app_data_hash::AppDataHash,
         models::{
@@ -17,7 +19,7 @@ use {
 
 #[derive(Clone, Debug)]
 pub struct Amm {
-    helper: contracts::CowAmmLegacyHelper,
+    helper: CowAmmLegacyHelper,
     address: Address,
     tradeable_tokens: Vec<Address>,
 }
@@ -52,7 +54,7 @@ impl Amm {
     pub async fn template_order(&self, prices: Vec<U256>) -> Result<TemplateOrder> {
         let (order, pre_interactions, post_interactions, signature) =
             self.helper.order(self.address, prices).call().await?;
-        self.convert_orders_reponse(order, signature, pre_interactions, post_interactions)
+        self.convert_orders_response(order, signature, pre_interactions, post_interactions)
     }
 
     /// Generates a template order to rebalance the AMM but also verifies that
@@ -85,7 +87,7 @@ impl Amm {
     /// Converts a successful response of the CowAmmHelper into domain types.
     /// Can be used for any contract that correctly implements the CoW AMM
     /// helper interface.
-    fn convert_orders_reponse(
+    fn convert_orders_response(
         &self,
         order: RawOrder,
         signature: Bytes<Vec<u8>>,

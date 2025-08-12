@@ -1,7 +1,10 @@
 use {
+    hex::{FromHex, FromHexError},
     crate::shared::{
         models::{DomainSeparator, quote::QuoteSigningScheme},
-        utils::hex::{FromHex, FromHexError},
+        utils::{
+            bytes_hex,
+        }
     },
     anyhow::{Context as _, Result, ensure},
     primitive_types::{H160, H256},

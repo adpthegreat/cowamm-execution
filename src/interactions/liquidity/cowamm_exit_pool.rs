@@ -11,11 +11,10 @@ use {
 
 #[derive(Clone, Debug)]
 pub struct Pool {
-    pub vault: eth::ContractAddress,
+    pub pool: eth::ContractAddress,
     pub id: Id,
     pub reserves: Reserves,
     pub fee: Fee,
-    pub version: Version,
 }
 
 impl Pool {
@@ -82,7 +81,7 @@ impl IntoIterator for Reserves {
 
 #[derive(Debug, thiserror::Error)]
 pub enum InvalidReserves {
-    #[error("invalid Balancer V2 token reserves; duplicate token address")]
+    #[error("invalid CowAmm Pool; duplicate token address")]
     DuplicateToken,
 }
 

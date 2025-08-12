@@ -4,11 +4,14 @@
 //! Safe in a pre-interaction).
 
 use {
-    crate::cow_amm::types::{SignatureCheck, SignatureValidating, SignatureValidationError},
+    crate::{
+        cow_amm::types::{SignatureCheck, SignatureValidating, SignatureValidationError},
+        shared::ethrpc::Web3, //yet
+        contracts::{ERC1271SignatureValidator, errors::EthcontractErrorType},
+        contracts::
+    },
     anyhow::Result,
-    contracts::{ERC1271SignatureValidator, errors::EthcontractErrorType},
     ethcontract::Bytes,
-    crate::shared::ethrpc::Web3, //yet
     futures::future,
     primitive_types::{H160, U256},
     std::sync::LazyLock,
