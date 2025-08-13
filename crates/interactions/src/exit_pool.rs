@@ -19,7 +19,7 @@ impl ExitPoolInteraction {
     pub fn encode_exit(&self) -> EncodedInteraction {
         let calldata = self.b_cow_pool.exit_pool(
             self.pool_amount_in,
-            self.min_amounts_out,
+            self.min_amounts_out.clone(),
         ).tx.data.expect("exit_pool should have calldata").0;
 
         // This assumes user_data is already ABI-encoded ExitPool (with poolAmountIn + minAmountsOut).
@@ -43,7 +43,10 @@ mod tests {
 
     #[test]
     fn encode_join_pool() {
+        let b_cow_pool = dummy_contract!(BCowPool, [0x01; 20]); 
+        
         let interaction = ExitPoolInteraction {
+            b_cow_pool: b_cow_pool,
             pool_amount_in: U256::from_dec_str("1000000000000000000").unwrap(), // 1e18
             max_amounts_out: vec![
                 U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18

@@ -399,7 +399,8 @@ fn main() {
                 },
             )
     });
-
+    generate_contract("BCowPool");
+           
     // Support contracts used for trade and token simulations.
     // generate_contract("Solver");
     // generate_contract("Spardose");

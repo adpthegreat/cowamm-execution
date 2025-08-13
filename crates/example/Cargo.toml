@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 cow_amm = { path = "../cow_amm" }
+contracts = { path = "../contracts" }
 interactions = { path = "../interactions" }
 ethcontract = { workspace = true }
 

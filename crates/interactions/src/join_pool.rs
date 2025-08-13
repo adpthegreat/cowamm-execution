@@ -42,7 +42,10 @@ mod tests {
 
     #[test]
     fn encode_join_pool() {
+        let b_cow_pool = dummy_contract!(BCowPool, [0x01; 20]);
+
         let interaction = JoinPoolInteraction {
+            b_cow_pool: b_cow_pool,
             pool_amount_out: U256::from_dec_str("1000000000000000000").unwrap(), // 1e18
             max_amounts_in: vec![
                 U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18

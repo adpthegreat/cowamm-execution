@@ -18,7 +18,7 @@ pub struct Pool {
 }
 
 impl Pool {
-    /// Encodes a pool swap as an interaction. Returns `Err` if the swap
+    /// Encodes a pool join as an interaction. Returns `Err` if the join
     /// parameters are invalid for the pool, specifically if the input and
     /// output tokens do not belong to the pool.
     pub fn join_pool(
