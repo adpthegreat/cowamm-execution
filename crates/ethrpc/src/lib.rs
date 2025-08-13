@@ -1,5 +1,4 @@
 pub mod alloy;
-pub mod block_stream;
 pub mod buffered;
 pub mod dummy; //RENAME
 // pub mod extensions;

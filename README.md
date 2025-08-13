@@ -1,62 +1,25 @@
-https://docs.propellerheads.xyz/tycho/for-dexs/protocol-integration/execution/code-architecture 
-https://hackmd.io/vHBDLooJSkmX-GNCxy26KQ
-https://github.com/propeller-heads/tycho-simulation/blob/main/src/evm/protocol/vm/adapter_contract.rs - this is how we'll access the orderFromSellAmount in the CowAMMHelper contract and get the traded output so that we can send the details to the api, through the ABI
+## Execution layer for tycho CoWAMM module 
+This repo contains the execution code for the cow_amm protocol for the tycho integration which covers with the generation of orders from the cowamm helper contract and the encoding of pool joins and exits with the relevant models for all of them
 
-> vm > adapter_contract 
+Most of the code here is gotten from the CoWprotocol [services](https://github.com/cowprotocol/services) with was not needed removed, and only the relevant parts
+for encoding, order generation and setttlement 
 
-> vm > tycho_simulation_contract
+`ethcontract` is used to generate the rust bindings, when `cargo build` is run, the build.rs in the `contracts` crate generates the rust bindings for solidity contact which can be located in `target/debug/build/contracts-<some-magic-number>/out/<contract-name>.rs`
 
-// it'll be 
-> vm > helper_contract 
+The `api_client` crate contains an api for interacting with the cow protocol order book, fetching orders, posting orders 
 
-> vm tycho_simulation_contract
+The `contracts` crate contains artifacts for the contracts to generate the rust bindings for the relevant contracts 
 
-//forget all the api responses part, we just need the simulation part with revm extracted out 
+The `cow_amm` crate contains the necessary rust helper code for the fetching the orders for the amm in the `helper` folder 
 
-// then we get the outputs
+The `ethrpc` crate contains relevant utilities for rpc methods for simulation and sending transaction 
 
-// then we create an api execution layer to post it to the api 
+The `example` crate contains an example usage for the encoding pool joins and exits to be used as a pre or post interaction in the settlement 
 
-//the goal is to make it contract agnostic or cowamm helper specific 
+The `interactions` crate contains the necessary encoded interactions for the pool join, pool exit and other relevant enocdings like one for wrapping eth to weth 
 
-https://github.com/propeller-heads/tycho-simulation/blob/main/src/evm/Readme.md 
+The `settlement` crate contains the types for encoding settlements / trades 
 
+The `shared` crate contains modules used by a lot of components like the `models`, `number` crate for working with numbers, `app_data` contains models for app_data (extra information associated with an order) `interaction.rs` contains the `Interaction` trait for the encoded interactions, and the `utils` crate for commonly used utilties 
 
-https://github.com/cowprotocol/services/tree/eb35a3c47898cf4faae24bd138073e6147c1fd54/crates/contracts all the contracts tests Solver , trader, swapper interaction
-
-
-https://github.com/cowprotocol/services/blob/eb35a3c47898cf4faae24bd138073e6147c1fd54/crates/cow-amm/src/amm.rs - helper contract sdk - old one , make a new one 
-
-https://github.com/cowprotocol/services/blob/40c8526a3627596ff421aff04a20ee1832b6fb0f/crates/shared/src/interaction.rs
-
- additional things to do 
-
-- deep dive into cow amm services
-
-- create an api sdk for cow amm endpoints in rust, python, golang 
-
-- create rust version of https://github.com/cowprotocol/watch-tower 
-
-https://github.com/cowprotocol/ethcontract-rs/tree/main/ethcontract-generate 
-
-SOLVER FLOW 
-
-//encode and return interactions for join_pool or exit_pool
-
-//return a valid jit order from sell amount using the cow amm helper module 
-
-//solver integrate interactions and probably other interactions to the generated jit order (settlement)
-
-//encode the settlement 
-
-//post it to the api using the api client and get response 
-
-//DRIVER IS ENTRPOINT TO CODE 
-//https://github.com/cowprotocol/services/blob/main/crates/driver/README.md
-
-
-RPC API Interaction code - useful stuff tbh 
-https://github.com/cowprotocol/services/blob/c12eddc78a2b923a10d24e6832a87908509eb4a4/crates/autopilot/src/infra/blockchain/mod.rs#L48
-
-Workspace folder structure 
-https://github.com/cowprotocol/services/blob/c12eddc78a2b923a10d24e6832a87908509eb4a4/Cargo.toml#L5
+The `testlib` crate contains utilities for testing used in other crates 

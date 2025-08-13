@@ -8,6 +8,7 @@ cow_amm = { path = "../cow_amm" }
 contracts = { path = "../contracts" }
 interactions = { path = "../interactions" }
 ethcontract = { workspace = true }
+web3 = { workspace = true }
 
 [lints]
 workspace = true

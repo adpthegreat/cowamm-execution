@@ -4,9 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-# Add dependencies as needed
-
-# Interactions dependencies
 shared = { path = "../shared" }
 contracts = { path = "../contracts" }
 cow_amm = { path = "../cow_amm" }
