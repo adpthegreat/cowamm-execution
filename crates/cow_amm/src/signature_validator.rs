@@ -18,7 +18,7 @@ pub struct Validator {
     signatures: contracts::support::Signatures,
     settlement: H160,
     vault_relayer: H160,
-    web3: Web3,
+    web3: Web3
 }
 
 impl Validator {

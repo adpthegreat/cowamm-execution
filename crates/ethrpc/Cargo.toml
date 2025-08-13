@@ -11,6 +11,8 @@ doctest = false
 [dependencies]
 alloy = { workspace = true, default-features = false, features = ["json-rpc", "providers", "rpc-client", "transports"] }
 anyhow = { workspace = true }
+shared = { path = "../shared" }
+observe = { path = "../observe" }
 async-trait = { workspace = true }
 futures = { workspace = true }
 hex = { workspace = true }

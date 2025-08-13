@@ -1,0 +1,1 @@
+git@github.com:open-telemetry/opentelemetry-rust.git

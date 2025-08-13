@@ -4,7 +4,7 @@ use {
         jsonrpc::types::{Call, Value},
         transport::DynTransport,
     },
-    shared::observe,
+    observe,
     futures::{FutureExt, future::BoxFuture},
     std::sync::Arc,
     web3::{BatchTransport, RequestId, Transport, error::Error as Web3Error},

@@ -3,7 +3,7 @@ use {
     contracts::WETH9,
     ethcontract::Bytes,
     primitive_types::U256,
-    crate::shared::interaction::{EncodedInteraction, Interaction},
+    shared::interaction::{EncodedInteraction, Interaction},
 };
 
 #[derive(Clone, Debug)]

@@ -2,10 +2,10 @@ pub mod alloy;
 pub mod block_stream;
 pub mod buffered;
 pub mod dummy; //RENAME
-pub mod extensions;
+// pub mod extensions;
 pub mod http;
 pub mod instrumented;
-pub mod mock;
+// pub mod mock;
 pub mod multicall;
 
 use {

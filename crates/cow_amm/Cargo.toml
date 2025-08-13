@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 shared = { path = "../shared" }
 contracts = { path = "../contracts" }
+ethrpc = { path = "../ethrpc" }
 bigdecimal = { workspace = true }
 num = { workspace = true }
 serde = { workspace = true }
@@ -19,3 +20,4 @@ hex-literal = { workspace = true }
 tracing = { workspace = true }
 async-trait = { workspace = true }
 mockall = { workspace = true }
+web3 = { workspace = true }

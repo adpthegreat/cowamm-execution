@@ -48,12 +48,12 @@ macro_rules! include_contracts {
 }
 
 include_contracts! {
+    BCowPool;
     ChainalysisOracle;
     CowAmm;
     CowAmmConstantProductFactory;
     CowAmmLegacyHelper;
     CowProtocolToken;
-    // CowAmmUniswapV2PriceOracle;
     // CoWSwapEthFlow;
     CoWSwapOnchainOrders;
     ERC20;
@@ -75,7 +75,7 @@ pub mod support {
         Balances;
         Multicall;
         Signatures;
-        // SimulateCode;
+        SimulateCode;
         // Solver;
         // Spardose;
         // Swapper;

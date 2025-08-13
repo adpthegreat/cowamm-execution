@@ -3,14 +3,14 @@
 //! generate interactions for them.
 
 use {
-    interactions::erc20::Erc20ApproveInteraction,
+    super::erc20::Erc20ApproveInteraction,
     contracts::{dummy_contract, ERC20},
     anyhow::{anyhow, ensure, Context as _, Result},
     ethcontract::{H160, U256},
+    ethrpc::Web3,
     shared::{
         interaction::{EncodedInteraction, Interaction},
         http_solver::model::TokenAmount,
-        ethrpc::Web3
     },
     maplit::hashmap,
     std::{
