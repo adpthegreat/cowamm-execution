@@ -6,10 +6,13 @@ edition = "2024"
 [dependencies]
 cow_amm = { path = "../cow_amm" }
 contracts = { path = "../contracts" }
+api_client = { path = "../api_client" }
 interactions = { path = "../interactions" }
+ethrpc = { path = "../ethrpc" }
 ethcontract = { workspace = true }
 web3 = { workspace = true }
 tokio = { workspace = true }
 hex = { workspace = true }
+reqwest = { workspace = true }
 [lints]
 workspace = true

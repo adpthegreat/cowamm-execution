@@ -22,9 +22,6 @@ impl ExitPoolInteraction {
             self.min_amounts_out.clone(),
         ).tx.data.expect("exit_pool should have calldata").0;
 
-        // This assumes user_data is already ABI-encoded ExitPool (with poolAmountIn + minAmountsOut).
-        // If not, you'll need to encode using `ethabi::encode`.
-
         (self.b_cow_pool.address(), 0.into(), Bytes(calldata))
     }
 }

@@ -2,7 +2,7 @@
 This repo contains the execution code for the cow_amm protocol for the tycho integration which covers with the generation of orders from the cowamm helper contract and the encoding of pool joins and exits with the relevant models for all of them
 
 Most of the code here is gotten from the CoWprotocol [services](https://github.com/cowprotocol/services) with was not needed removed, and only the relevant parts
-for encoding, order generation and setttlement 
+for encoding, order generation
 
 `ethcontract` is used to generate the rust bindings, when `cargo build` is run, the build.rs in the `contracts` crate generates the rust bindings for solidity contact which can be located in `target/debug/build/contracts-<some-magic-number>/out/<contract-name>.rs`
 
@@ -21,3 +21,5 @@ The `interactions` crate contains the necessary encoded interactions for the poo
 The `shared` crate contains modules used by a lot of components like the `models`, `number` crate for working with numbers, `app_data` contains models for app_data (extra information associated with an order) `interaction.rs` contains the `Interaction` trait for the encoded interactions, and the `utils` crate for commonly used utilties 
 
 The `testlib` crate contains utilities for testing used in other crates 
+
+To test the example, run `cargo run --bin example`

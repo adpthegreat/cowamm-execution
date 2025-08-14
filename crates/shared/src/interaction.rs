@@ -38,6 +38,16 @@ impl Interaction for InteractionData {
     }
 }
 
+impl<T: Into<Vec<u8>>> From<(H160, U256, Bytes<T>)> for InteractionData {
+    fn from(value: (H160, U256, Bytes<T>)) -> Self {
+        Self {
+            target: value.0,
+            value: value.1,
+            call_data: value.2.0.into(),
+        }
+    }
+}
+
 pub fn for_transaction<T>(tx: TransactionBuilder<T>) -> InteractionData
 where
     T: Transport,

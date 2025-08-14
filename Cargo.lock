@@ -1894,10 +1894,15 @@ dependencies = [
 name = "example"
 version = "0.1.0"
 dependencies = [
+ "api_client",
  "contracts",
  "cow_amm",
  "ethcontract",
+ "ethrpc",
+ "hex",
  "interactions",
+ "reqwest 0.12.22",
+ "tokio",
  "web3",
 ]
 

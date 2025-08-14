@@ -95,6 +95,22 @@ pub fn create_test_transport(url: &str) -> Web3Transport {
     Web3Transport::new(instrumented)
 }
 
+// pub fn create_web3_transport(url: &str) -> Web3 {
+//      web3::Web3::new(web3::transports::Http::new(
+//         Client::builder()
+//             .timeout(Duration::from_secs(10))
+//             .build()
+//             .unwrap(),
+//          url.try_into().unwrap(),
+//         "test".into(),
+//     ))
+// }
+
+// /// Like above but takes url from the environment NODE_URL.
+// pub fn create_web3_env_transport() -> Web3 {
+//     create_web3_transport(&std::env::var("NODE_URL").unwrap())
+// }
+
 /// Like above but takes url from the environment NODE_URL.
 pub fn create_env_test_transport() -> Web3Transport {
     create_test_transport(&std::env::var("NODE_URL").unwrap())

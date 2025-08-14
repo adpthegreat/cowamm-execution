@@ -53,7 +53,7 @@ impl Order {
     }
 }
 
-struct OrderBookApi {
+pub struct OrderBookApi {
     base: Url,
     client: Client,
 }

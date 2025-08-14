@@ -17,9 +17,9 @@ use {
 
 #[derive(Clone, Debug)]
 pub struct Amm {
-    helper: BCowHelper,
-    address: Address,
-    tradeable_tokens: Vec<Address>,
+    pub helper: BCowHelper,
+    pub address: Address,
+    pub tradeable_tokens: Vec<Address>,
 }
 
 impl Amm {
