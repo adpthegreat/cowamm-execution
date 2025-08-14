@@ -18,8 +18,6 @@ The `example` crate contains an example usage for the encoding pool joins and ex
 
 The `interactions` crate contains the necessary encoded interactions for the pool join, pool exit and other relevant enocdings like one for wrapping eth to weth 
 
-The `settlement` crate contains the types for encoding settlements / trades 
-
 The `shared` crate contains modules used by a lot of components like the `models`, `number` crate for working with numbers, `app_data` contains models for app_data (extra information associated with an order) `interaction.rs` contains the `Interaction` trait for the encoded interactions, and the `utils` crate for commonly used utilties 
 
 The `testlib` crate contains utilities for testing used in other crates 

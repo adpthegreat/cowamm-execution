@@ -1,13 +1,12 @@
 use {
     crate::number::serialization::HexOrDecimalU256,
     primitive_types::{H160, U256},
-    serde::Serialize,
+    serde::{Serialize,Deserialize},
     serde_with::serde_as,
 };
 
 #[serde_as]
-#[derive(PartialEq, Clone, Debug, Serialize)]
-#[cfg_attr(any(test, feature = "e2e"), derive(serde::Deserialize))]
+#[derive(PartialEq, Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum FeePolicy {
     #[serde(rename_all = "camelCase")]
@@ -37,8 +36,7 @@ impl FeePolicy {
 }
 
 #[serde_as]
-#[derive(PartialEq, Clone, Debug, Serialize)]
-#[cfg_attr(any(test, feature = "e2e"), derive(serde::Deserialize))]
+#[derive(PartialEq, Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Quote {
     #[serde_as(as = "HexOrDecimalU256")]
@@ -50,8 +48,7 @@ pub struct Quote {
 }
 
 #[serde_as]
-#[derive(Clone, Debug, PartialEq, Serialize)]
-#[cfg_attr(any(test, feature = "e2e"), derive(serde::Deserialize))]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ExecutedProtocolFee {
     pub policy: FeePolicy,

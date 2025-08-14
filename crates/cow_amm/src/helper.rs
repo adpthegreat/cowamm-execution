@@ -2,7 +2,7 @@
 use {
     anyhow::{Context, Result},
     ethcontract::{Address, Bytes, U256, errors::MethodError},
-    contracts::CowAmmLegacyHelper,
+    contracts::{BCowHelper},
     super::types::{SignatureCheck, SignatureValidating},
     shared::{
         app_data::app_data_hash::AppDataHash,
@@ -17,15 +17,27 @@ use {
 
 #[derive(Clone, Debug)]
 pub struct Amm {
-    helper: CowAmmLegacyHelper,
+    helper: BCowHelper,
     address: Address,
     tradeable_tokens: Vec<Address>,
 }
 
 impl Amm {
-    pub(crate) async fn new(
+    pub async fn new(
         address: Address,
-        helper: &CowAmmLegacyHelper,
+        helper: &BCowHelper,
+    ) -> Result<Self, MethodError> {
+        let tradeable_tokens = helper.tokens(address).call().await?;
+
+        Ok(Self {
+            address,
+            helper: helper.clone(),
+            tradeable_tokens,
+        })
+    }
+    pub async fn new_legacy(
+        address: Address,
+        helper: &BCowHelper,
     ) -> Result<Self, MethodError> {
         let tradeable_tokens = helper.tokens(address).call().await?;
 
@@ -51,10 +63,26 @@ impl Amm {
     /// token addresses.
     pub async fn template_order(&self, prices: Vec<U256>) -> Result<TemplateOrder> {
         let (order, pre_interactions, post_interactions, signature) =
-            self.helper.order(self.address, prices).call().await?;
+        self.helper.order(self.address, prices).call().await?; //order_from_sell_amount
         self.convert_orders_response(order, signature, pre_interactions, post_interactions)
     }
-
+    /// Method for returning the canonical order required to satisfy the
+    /// pool's invariants, given a buy token and exact buy amount.
+    pub async fn template_order_from_buy_amount(&self, buy_token: Address, buy_amount: U256) -> Result<TemplateOrder> {
+        let (order, pre_interactions, post_interactions, signature) =
+        self.helper.order_from_buy_amount(self.address, buy_token, buy_amount).call().await?; 
+        self.convert_orders_response(order, signature, pre_interactions, post_interactions)
+    }
+    /// Method for returning the canonical order required to satisfy the
+    /// pool's invariants, given a sell token and a **tentative** sell amount.
+    /// The sell amount of the resulting order will not exactly be the input sell
+    /// amount, however it should be fairly close for typical pool configurations.
+    pub async fn template_order_from_sell_amount(&self, sell_token: Address, sell_amount: U256) -> Result<TemplateOrder> {
+        let (order, pre_interactions, post_interactions, signature) =
+        self.helper.order_from_sell_amount(self.address, sell_token, sell_amount).call().await?; 
+        self.convert_orders_response(order, signature, pre_interactions, post_interactions)
+    }
+  
     /// Generates a template order to rebalance the AMM but also verifies that
     /// the signature is actually valid to protect against buggy helper
     /// contracts.
@@ -81,9 +109,63 @@ impl Amm {
 
         Ok(template)
     }
+    /// Generates a template order to rebalance the AMM but also verifies that
+    /// the signature is actually valid to protect against buggy helper
+    /// contracts.
+    pub async fn validated_template_order_from_buy_amount(
+        &self,
+        buy_token: Address, 
+        buy_amount: U256,
+        validator: &dyn SignatureValidating,
+        domain_separator: &DomainSeparator,
+    ) -> Result<TemplateOrder> {
+        let template = self.template_order_from_buy_amount(buy_token, buy_amount).await?;
 
-    /// Converts a successful response of the CowAmmHelper into domain types.
-    /// Can be used for any contract that correctly implements the CoW AMM
+        // A buggy helper contract could return a signature that is actually not valid.
+        // To avoid issues caused by that we check the validity of the signature.
+        let hash = hashed_eip712_message(domain_separator, &template.order.hash_struct());
+        validator
+            .validate_signature_and_get_additional_gas(SignatureCheck {
+                signer: self.address,
+                hash,
+                signature: template.signature.to_bytes(),
+                interactions: template.pre_interactions.clone(),
+            })
+            .await
+            .context("invalid signature")?;
+
+        Ok(template)
+    }
+    /// Generates a template order to rebalance the AMM but also verifies that
+    /// the signature is actually valid to protect against buggy helper
+    /// contracts.
+    pub async fn validated_template_order_from_sell_amount(
+        &self,
+        sell_token: Address, 
+        sell_amount: U256,
+        validator: &dyn SignatureValidating,
+        domain_separator: &DomainSeparator,
+    ) -> Result<TemplateOrder> {
+        let template = self.template_order_from_sell_amount(sell_token, sell_amount).await?;
+
+        // A buggy helper contract could return a signature that is actually not valid.
+        // To avoid issues caused by that we check the validity of the signature.
+        let hash = hashed_eip712_message(domain_separator, &template.order.hash_struct());
+        validator
+            .validate_signature_and_get_additional_gas(SignatureCheck {
+                signer: self.address,
+                hash,
+                signature: template.signature.to_bytes(),
+                interactions: template.pre_interactions.clone(),
+            })
+            .await
+            .context("invalid signature")?;
+
+        Ok(template)
+    }
+
+    /// Converts a successful response of the BCowHelper into domain types.
+    /// Can be used for any contract that correctly implements the CoW AMM (BCoW)
     /// helper interface.
     fn convert_orders_response(
         &self,

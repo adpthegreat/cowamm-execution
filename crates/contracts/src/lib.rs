@@ -49,12 +49,10 @@ macro_rules! include_contracts {
 
 include_contracts! {
     BCowPool;
-    ChainalysisOracle;
+    BCowHelper;
     CowAmm;
-    CowAmmConstantProductFactory;
-    CowAmmLegacyHelper;
     CowProtocolToken;
-    // CoWSwapEthFlow;
+    CoWSwapEthFlow;
     CoWSwapOnchainOrders;
     ERC20;
     ERC20Mintable;

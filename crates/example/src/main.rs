@@ -3,40 +3,58 @@ use ethcontract::{Address, H256, H160, U256, Bytes};
 use {
     cow_amm::helper::Amm,
     interactions::{join_pool::JoinPoolInteraction, exit_pool::ExitPoolInteraction},
-    contracts::{BCowPool, CowAmmLegacyHelper}
+    contracts::{contract, BCowPool, BCowHelper}
 };
 
 
 fn main() {
-    //Settlement encoding example 
     //join pool and exit pool encoding examples 
-     let exit_pool_interaction = ExitPoolInteraction {
-            b_cow_pool: BCowPool,
-            pool_amount_in: U256::from_dec_str("1000000000000000000").unwrap(), // 1e18
-            min_amounts_out: vec![
-                U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
-                U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
-            ],
-    };
+    // let addr: Address = Address::from(H256::from_uint(&U256::from("0x9bd702e05b9c97e4a4a3e47df1e0fe7a0c26d2f1".to_vec())));
+    // let helper_addr: Address = Address::from(H256::from_uint(&U256::from("0x3FF0041A614A9E6Bf392cbB961C97DA214E9CB31".to_vec())));
 
-    let encoded_exit = exit_pool_interaction.encode_exit();
+    //  let exit_pool_interaction = ExitPoolInteraction {
+    //         b_cow_pool: contract!(BCowPool, addr.clone()), 
+    //         pool_amount_in: U256::from_dec_str("1000000000000000000").unwrap(), // 1e18
+    //         min_amounts_out: vec![
+    //             U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
+    //             U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
+    //         ],
+    // };
 
-    let join_pool_interaction = JoinPoolInteraction {
-            b_cow_pool: BCowPool,
-            pool_amount_out: U256::from_dec_str("1000000000000000000").unwrap(), // 1e18
-            max_amounts_in: vec![
-                U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
-                U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
-            ],
-    };
+    // let encoded_exit = exit_pool_interaction.encode_exit();
 
-    let encoded_join = join_pool_interaction.encode_join();
+    // let join_pool_interaction = JoinPoolInteraction {
+    //         b_cow_pool: contract!(BCowPool, addr),
+    //         pool_amount_out: U256::from_dec_str("1000000000000000000").unwrap(), // 1e18
+    //         max_amounts_in: vec![
+    //             U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
+    //             U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
+    //         ],
+    // };
 
-    // let address = Address::from("0x9bd702e05b9c97e4a4a3e47df1e0fe7a0c26d2f1");
+    // let encoded_join = join_pool_interaction.encode_join();
 
-    // let amm = Amm::new(address, HELPER_BYTECODE); private?
+    // let amm = Amm::new(address, contract!(BCowPoolHelper, helper_addr));
 
-    // let _ = amm.template_order()
+    // // Get tokens traded by this AMM
+    // let tokens = amm.traded_tokens();
+    // println!("Traded tokens: {:?}", tokens);
 
-    //post order to api example 
+    // sell_amount
+    // let sell_amount = U256::from(1_000_000_000u64);
+
+    // // Get a template order
+    // let template = amm.template_order_from_sell_amount(sell_amount).await?;
+
+    // // You can now use template.order, template.signature, etc.
+    // println!("Order: {:?}", template.order);
+    // println!("Signature: {:?}", template.signature);
+    // println!("Pre interactions: {:?}", template.pre_interactions);
+    // println!("Post interactions: {:?}", template.post_interactions);
+
+    //swap in cowamm (JitOrder) then join 
+
+    //exit first then swap superfluous (JitOrder)
+
+    //post order to api 
 }

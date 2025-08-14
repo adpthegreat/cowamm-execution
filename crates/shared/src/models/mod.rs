@@ -1,4 +1,5 @@
 pub mod auction;
+pub mod competition;
 pub mod token_pair;
 pub mod interaction;
 pub mod fee_policy;

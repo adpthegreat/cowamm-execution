@@ -1,3 +1,11 @@
+//replica of dummy_contract, but will use it this one for live examples and dummy_contract! for tests
+#[macro_export]
+macro_rules! contract {
+    ($contract:ty, $addr:expr_2021) => {
+        <$contract>::at(&$crate::web3::dummy(), $addr.into())
+    };
+}
+
 #[macro_export]
 macro_rules! dummy_contract {
     ($contract:ty, $addr:expr_2021) => {
