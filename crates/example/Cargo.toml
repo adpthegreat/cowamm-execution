@@ -9,6 +9,7 @@ contracts = { path = "../contracts" }
 interactions = { path = "../interactions" }
 ethcontract = { workspace = true }
 web3 = { workspace = true }
-
+tokio = { workspace = true }
+hex = { workspace = true }
 [lints]
 workspace = true

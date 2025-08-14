@@ -35,19 +35,7 @@ impl Amm {
             tradeable_tokens,
         })
     }
-    pub async fn new_legacy(
-        address: Address,
-        helper: &BCowHelper,
-    ) -> Result<Self, MethodError> {
-        let tradeable_tokens = helper.tokens(address).call().await?;
-
-        Ok(Self {
-            address,
-            helper: helper.clone(),
-            tradeable_tokens,
-        })
-    }
-
+    
     pub fn address(&self) -> &Address {
         &self.address
     }
