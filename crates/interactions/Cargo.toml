@@ -4,9 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-shared = { path = "../shared" }
+shared = { workspace = true }
 contracts = { path = "../contracts" }
 cow_amm = { path = "../cow_amm" }
+ethrpc = { workspace = true }
 api_client = { path = "../api_client" }
 alloy = { workspace = true }
 serde = { workspace = true }
@@ -19,4 +20,3 @@ async-trait = { workspace = true }
 web3 = { workspace = true }
 maplit = { workspace = true }
 futures = { workspace = true }
-ethrpc = { path = "../ethrpc" }

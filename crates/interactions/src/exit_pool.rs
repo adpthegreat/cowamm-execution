@@ -1,5 +1,8 @@
 use {
-    ethcontract::{Bytes, H256},
+    ethcontract::{
+        tokens::Bytes,
+        H256
+    },
     primitive_types::U256,
         contracts::{BCowPool},
         shared::{

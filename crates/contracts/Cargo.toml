@@ -19,7 +19,7 @@ bin = [
 
 [dependencies]
 serde = { workspace = true }
-shared = { path = "../shared" }
+shared = { workspace = true  }
 ethcontract = { workspace = true }
 
 # [bin-dependencies]

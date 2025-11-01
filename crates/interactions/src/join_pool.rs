@@ -1,5 +1,9 @@
 use {
-    ethcontract::{Bytes, H256, Address},
+    ethcontract::{
+        tokens::Bytes,
+        H256,
+        Address
+    },
     primitive_types::U256,
     contracts::BCowPool,
     shared::{
@@ -54,7 +58,7 @@ mod tests {
         };
 
         let (to, value, data) = interaction.encode();
-        assert_eq!(to, pool);
+        assert_eq!(to, b_cow_pool);
         assert_eq!(value, U256::zero());
         assert!(data.0.len() > 4); // basic sanity check
     }

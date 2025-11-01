@@ -1,10 +1,23 @@
 use std::sync::LazyLock;
 use ethcontract::{Address, H256, H160, U256, Bytes};
+use chrono::Utc;
 use ethrpc::http::HttpTransport;
 use std::time::Duration;
+use std::str::FromStr;
 use hex;
-
+use chrono::TimeZone;
 use {
+    app_data::AppDataHash,
+    model::{
+        order::{
+            BuyTokenDestination, Interactions, Order, OrderClass, OrderCreation,
+            OrderCreationAppData, OrderData, OrderKind, OrderMetadata, OrderStatus,
+            OrderUid, SellTokenSource,
+        },
+        interaction::InteractionData,
+        signature::{EcdsaSignature, EcdsaSigningScheme}
+    },
+    num::BigUint,
     cow_amm::helper::Amm,
     interactions::{join_pool::JoinPoolInteraction, exit_pool::ExitPoolInteraction},
     contracts::{contract, BCowPool, BCowHelper},
@@ -67,10 +80,21 @@ async fn main() {
     //The pre and post interactions are to be encoded into the solvers settlement 
 
     //swap in cowamm (JitOrder) then join 
-    template.post_interactions.push(encoded_join.into());
+    template.post_interactions.push(
+        InteractionData {
+            target: encoded_join.0,
+            value: encoded_join.1,
+            call_data: encoded_join.2.0.into()
+        }
+    );
 
     //exit first then swap (JitOrder) superfluous token
-    template.pre_interactions.push(encoded_exit.into());
+    template.pre_interactions.push( 
+        InteractionData {
+            target: encoded_exit.0,
+            value: encoded_exit.1,
+            call_data: encoded_exit.2.0.into(),
+    });
 
     let client = Client::builder()
                     .timeout(Duration::from_secs(10))
@@ -80,4 +104,75 @@ async fn main() {
     //post order to api 
     let ob_api = OrderBookApi::new(client, MAINNET_PROD);
     
+     //https://github.com/cowprotocol/services/blob/d884bbe4db35f6d48f53cfeef856a72d7f50d302/crates/model/src/order.rs#L48
+    let signing_scheme = EcdsaSigningScheme::Eip712;
+    // let expected = Order {
+    //     metadata: OrderMetadata {
+    //             creation_date: Utc.timestamp_millis_opt(3_000).unwrap(),
+    //             class: OrderClass::Limit,
+    //             owner: H160::from_low_u64_be(1),
+    //             uid: OrderUid([17u8; 56]),
+    //             available_balance: None,
+    //             executed_buy_amount: BigUint::from_bytes_be(&[3]),
+    //             executed_sell_amount: BigUint::from_bytes_be(&[5]),
+    //             executed_sell_amount_before_fees: 4.into(),
+    //             executed_fee_amount: 1.into(),
+    //             executed_fee: 1.into(),
+    //             executed_fee_token: H160::from_low_u64_be(10),
+    //             invalidated: true,
+    //             status: OrderStatus::Open,
+    //             settlement_contract: H160::from_low_u64_be(2),
+    //             full_app_data: Some("123".to_string()),
+    //             ..Default::default()
+    //         },
+    //         data: template.order,
+    //         signature: EcdsaSignature { //dummy signature for now
+    //             v: 1,
+    //             r: H256::from_str(
+    //                 "0200000000000000000000000000000000000000000000000000000000000003",
+    //             )
+    //             .unwrap(),
+    //             s: H256::from_str(
+    //                 "0400000000000000000000000000000000000000000000000000000000000005",
+    //             )
+    //             .unwrap(),
+    //         }
+    //         .to_signature(signing_scheme),
+    //         interactions: Interactions {
+    //             post: template.post_interactions,  
+    //             pre: template.pre_interactions, //https://github.com/cowprotocol/services/blob/d884bbe4db35f6d48f53cfeef856a72d7f50d302/crates/model/src/order.rs#L48
+    //         }
+    //     };
+    //convert template.order to OrderCreation?
+    let order_creation = OrderCreation {
+        sell_token: H160::from_low_u64_be(1), // You'll need to set this properly
+        buy_token: H160::from_low_u64_be(2), // You'll need to set this properly
+        receiver: None,
+        sell_amount: U256::from(0),
+        buy_amount: U256::from(0),
+        valid_to: 0,
+        app_data: OrderCreationAppData::Hash {
+            hash: AppDataHash([0x44; 32]),
+        },
+        fee_amount: U256::from(1),
+        kind: OrderKind::Sell, // Or Buy, depending on your order
+        partially_fillable: false,
+        sell_token_balance: SellTokenSource::Erc20,
+        buy_token_balance: BuyTokenDestination::Erc20,
+        from: Some(H160::from_low_u64_be(1)),
+        signature: EcdsaSignature {
+            v: 1,
+            r: H256::from_str(
+                "0200000000000000000000000000000000000000000000000000000000000003",
+            )
+            .unwrap(),
+            s: H256::from_str(
+                "0400000000000000000000000000000000000000000000000000000000000005",
+            )
+            .unwrap(),
+        }
+        .to_signature(EcdsaSigningScheme::Eip712), // Use the appropriate signing scheme
+        quote_id: None,
+    };
+        let _ = ob_api.create_order(&order_creation).await.unwrap();
 }

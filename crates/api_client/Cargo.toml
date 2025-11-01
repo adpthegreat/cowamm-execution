@@ -4,9 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-shared = { path = "../shared" }
+model = { workspace = true, features = ["e2e"] }
+number = { workspace = true }
+shared = { workspace = true }
 reqwest = { workspace = true }
-serde = { version = "1.0.219", features = ["derive"] }
+serde = { workspace = true,  features = ["derive"] }
 serde_with = { workspace = true }
 serde_json = { workspace = true }
 hex = { workspace = true }
@@ -14,6 +16,10 @@ hex-literal = { workspace = true }
 anyhow = { workspace = true }
 tokio = { workspace = true }
 async-trait = { workspace = true }
-url = "2.5.4"
+app_data = { workspace = true }
+url = { workspace = true }
+num = { workspace = true }
 primitive-types = { workspace = true }
 ethcontract = { workspace = true }
+web3 = { workspace = true }
+derive_more = {  workspace = true }

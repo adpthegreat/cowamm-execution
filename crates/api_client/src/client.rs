@@ -1,17 +1,16 @@
 use {
-    anyhow::{Context, Result},
-    shared::{
-        models::{
-            auction::Auction,
-            order::{OrderClass, OrderKind, OrderStatus, OrderUid, CancellationPayload, OrderCancellations, OrderCreation, BUY_ETH_ADDRESS},
-            quote::{OrderQuoteRequest, OrderQuoteResponse},
-            trade::{Trade},
-            competition::{CompetitionOrderStatus, NativePriceResponse, TotalSurplus, CompetitionAuction, SolverCompetitionResponse}
-        },
-        app_data::app_data_hash::{AppDataHash, AppDataDocument},
-        number::serialization::HexOrDecimalU256,
-        utils::url_utils,
+    ::url::Url,
+    model::{
+        auction::Auction,
+        order::{OrderClass, OrderKind, OrderStatus, OrderUid, CancellationPayload, OrderCancellations, OrderCreation, BUY_ETH_ADDRESS},
+        quote::{OrderQuoteRequest, OrderQuoteResponse},
+        trade::Trade,
     },
+    crate::models::{CompetitionOrderStatus, NativePriceResponse, TotalSurplus, CompetitionAuction, SolverCompetitionResponse},
+    anyhow::{Context, Result},
+    number::serialization::HexOrDecimalU256,
+    app_data::{AppDataHash, AppDataDocument},
+    shared::url,
     primitive_types::{H160, U256, H256},
     serde::{Deserialize, Deserializer, Serialize, Serializer, de},
     reqwest::Client,
@@ -23,7 +22,6 @@ use {
         collections::HashMap,
         time::{Duration, Instant},
     },
-    url::Url,
 };
 
 #[serde_as]
@@ -71,7 +69,7 @@ impl OrderBookApi {
         struct Auction {
             orders: Vec<Order>,
         }
-        let url = url_utils::join(&self.base, "api/v1/auction");
+        let url = url::join(&self.base, "api/v1/auction");
         let auction: Auction = self
             .client
             .get(url)
@@ -85,7 +83,7 @@ impl OrderBookApi {
 
     //post an order
     pub async fn create_order(&self, order: &OrderCreation) -> reqwest::Result<OrderUid> {
-        let url = url_utils::join(&self.base, &format!("api/v1/orders"));
+        let url = url::join(&self.base, &format!("api/v1/orders"));
         self.client
             .post(url)
             .send()
@@ -96,7 +94,7 @@ impl OrderBookApi {
     }
     //delete an order
     pub async fn cancel_order(&self, uid: &OrderUid, cancellation: &CancellationPayload) -> reqwest::Result<()> {
-        let url = url_utils::join(&self.base, &format!("api/v1/orders/{uid}"));
+        let url = url::join(&self.base, &format!("api/v1/orders/{uid}"));
         self.client
             .delete(url)
             .json(cancellation)
@@ -107,7 +105,7 @@ impl OrderBookApi {
     }
     //delete an order
     pub async fn cancel_orders(&self, cancellations: &OrderCancellations) -> reqwest::Result<()> {
-        let url = url_utils::join(&self.base, &format!("api/v1/orders"));
+        let url = url::join(&self.base, &format!("api/v1/orders"));
         self.client
             .delete(url)
             .json(cancellations)
@@ -118,7 +116,7 @@ impl OrderBookApi {
     }
 
     pub async fn get_order(&self, uid: &OrderUid) -> reqwest::Result<Order> {
-        let url = url_utils::join(&self.base, &format!("api/v1/orders/{uid}"));
+        let url = url::join(&self.base, &format!("api/v1/orders/{uid}"));
         self.client
             .get(url)
             .send()
@@ -129,7 +127,7 @@ impl OrderBookApi {
     }
     //get the status of an order 
     pub async fn get_order_status(&self, uid: &OrderUid) -> reqwest::Result<CompetitionOrderStatus> {
-        let url = url_utils::join(&self.base, &format!("api/v1/orders/{uid}/status"));
+        let url = url::join(&self.base, &format!("api/v1/orders/{uid}/status"));
         self.client
             .get(url)
             .send()
@@ -141,7 +139,7 @@ impl OrderBookApi {
 
    // Transaction endpoints
     pub async fn get_orders_by_tx(&self, tx_hash: &H256) -> reqwest::Result<Vec<Order>> {
-        let url = url_utils::join(&self.base, &format!("api/v1/transactions/{:x}/orders", tx_hash));
+        let url = url::join(&self.base, &format!("api/v1/transactions/{:x}/orders", tx_hash));
         self.client
             .get(url)
             .send()
@@ -153,7 +151,7 @@ impl OrderBookApi {
 
     // Trades endpoints
     pub async fn get_trades_by_owner(&self, owner: &Address) -> reqwest::Result<Vec<Trade>> {
-        let url = url_utils::join(&self.base, "api/v1/trades");
+        let url = url::join(&self.base, "api/v1/trades");
         self.client
             .get(url)
             .query(&[("owner", format!("{:x}", owner))])
@@ -165,7 +163,7 @@ impl OrderBookApi {
     }
 
     pub async fn get_trades_by_order(&self, order_uid: &OrderUid) -> reqwest::Result<Vec<Trade>> {
-        let url = url_utils::join(&self.base, "api/v1/trades");
+        let url = url::join(&self.base, "api/v1/trades");
         self.client
             .get(url)
             .query(&[("orderUid", order_uid.to_string())])
@@ -178,7 +176,7 @@ impl OrderBookApi {
 
     // Auction endpoints
     pub async fn get_auction(&self) -> reqwest::Result<Auction> {
-        let url = url_utils::join(&self.base, "api/v1/auction");
+        let url = url::join(&self.base, "api/v1/auction");
         self.client
             .get(url)
             .send()
@@ -190,7 +188,7 @@ impl OrderBookApi {
 
     // Account endpoints
     pub async fn get_user_orders(&self, owner: &Address, offset: Option<u64>, limit: Option<u64>) -> reqwest::Result<Vec<Order>> {
-        let url = url_utils::join(&self.base, &format!("api/v1/account/{:x}/orders", owner));
+        let url = url::join(&self.base, &format!("api/v1/account/{:x}/orders", owner));
         let mut query = Vec::new();
         if let Some(offset) = offset {
             query.push(("offset", offset.to_string()));
@@ -211,7 +209,7 @@ impl OrderBookApi {
 
     // Token endpoints
     pub async fn get_native_price(&self, token: &Address) -> reqwest::Result<NativePriceResponse> {
-        let url = url_utils::join(&self.base, &format!("api/v1/token/{:x}/native_price", token));
+        let url = url::join(&self.base, &format!("api/v1/token/{:x}/native_price", token));
         self.client
             .get(url)
             .send()
@@ -223,7 +221,7 @@ impl OrderBookApi {
 
     // Quote endpoints
     pub async fn get_quote(&self, request: &OrderQuoteRequest) -> reqwest::Result<OrderQuoteResponse> {
-        let url = url_utils::join(&self.base, "api/v1/quote");
+        let url = url::join(&self.base, "api/v1/quote");
         self.client
             .post(url)
             .json(request)
@@ -236,7 +234,7 @@ impl OrderBookApi {
  
     // Solver competition endpoints (v2)
     pub async fn get_solver_competition_v2(&self, auction_id: u64) -> reqwest::Result<SolverCompetitionResponse> {
-        let url = url_utils::join(&self.base, &format!("api/v2/solver_competition/{auction_id}"));
+        let url = url::join(&self.base, &format!("api/v2/solver_competition/{auction_id}"));
         self.client
             .get(url)
             .send()
@@ -247,7 +245,7 @@ impl OrderBookApi {
     }
 
     pub async fn get_solver_competition_by_tx_v2(&self, tx_hash: &H256) -> reqwest::Result<SolverCompetitionResponse> {
-        let url = url_utils::join(&self.base, &format!("api/v2/solver_competition/by_tx_hash/{:x}", tx_hash));
+        let url = url::join(&self.base, &format!("api/v2/solver_competition/by_tx_hash/{:x}", tx_hash));
         self.client
             .get(url)
             .send()
@@ -258,7 +256,7 @@ impl OrderBookApi {
     }
 
     pub async fn get_latest_solver_competition_v2(&self) -> reqwest::Result<SolverCompetitionResponse> {
-        let url = url_utils::join(&self.base, "api/v2/solver_competition/latest");
+        let url = url::join(&self.base, "api/v2/solver_competition/latest");
         self.client
             .get(url)
             .send()
@@ -270,7 +268,7 @@ impl OrderBookApi {
 
     // Version endpoint
     pub async fn get_version(&self) -> reqwest::Result<String> {
-        let url = url_utils::join(&self.base, "api/v1/version");
+        let url = url::join(&self.base, "api/v1/version");
         self.client
             .get(url)
             .send()
@@ -282,7 +280,7 @@ impl OrderBookApi {
 
     // App data endpoints
     pub async fn get_app_data(&self, app_data_hash: &AppDataHash) -> reqwest::Result<AppDataDocument> {
-        let url = url_utils::join(&self.base, &format!("api/v1/app_data/{}", serde_json::to_string(app_data_hash).unwrap()));
+        let url = url::join(&self.base, &format!("api/v1/app_data/{}", serde_json::to_string(app_data_hash).unwrap()));
         self.client
             .get(url)
             .send()
@@ -293,7 +291,7 @@ impl OrderBookApi {
     }
 
     pub async fn register_app_data(&self, app_data_hash: &AppDataHash, app_data: &AppDataDocument) -> reqwest::Result<AppDataHash> {
-        let url = url_utils::join(&self.base, &format!("api/v1/app_data/{}", serde_json::to_string(app_data_hash).unwrap()));
+        let url = url::join(&self.base, &format!("api/v1/app_data/{}", serde_json::to_string(app_data_hash).unwrap()));
         self.client
             .put(url)
             .json(app_data)
@@ -305,7 +303,7 @@ impl OrderBookApi {
     }
 
     pub async fn register_app_data_auto(&self, app_data: &AppDataDocument) -> reqwest::Result<AppDataHash> {
-        let url = url_utils::join(&self.base, "api/v1/app_data");
+        let url = url::join(&self.base, "api/v1/app_data");
         self.client
             .put(url)
             .json(app_data)
@@ -318,7 +316,7 @@ impl OrderBookApi {
 
     // User endpoints
     pub async fn get_user_total_surplus(&self, address: &Address) -> reqwest::Result<TotalSurplus> {
-        let url = url_utils::join(&self.base, &format!("api/v1/users/{:x}/total_surplus", address));
+        let url = url::join(&self.base, &format!("api/v1/users/{:x}/total_surplus", address));
         self.client
             .get(url)
             .send()
