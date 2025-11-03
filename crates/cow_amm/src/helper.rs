@@ -8,7 +8,7 @@ use {
         order::{BuyTokenDestination, OrderData, OrderKind, SellTokenSource},
         signature::{Signature, hashed_eip712_message},
     },
-    app_data::{AppDataHash, AppDataDocument},
+    app_data::{AppDataHash},
     shared::signature_validator::{
         SignatureCheck, SignatureValidating
     }

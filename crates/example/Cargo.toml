@@ -19,5 +19,7 @@ hex = { workspace = true }
 chrono = { workspace = true }
 num = { workspace = true }
 reqwest = { workspace = true }
+tycho_simulation = { workspace = true }
+
 [lints]
 workspace = true
