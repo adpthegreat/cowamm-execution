@@ -26,3 +26,6 @@ To test the example, run `cargo run --bin example`
 
 
 <!-- https://github.com/cowprotocol/services/blob/d884bbe4db35f6d48f53cfeef856a72d7f50d302/crates/shared/src/signature_validator/mod.rs#L20  --> Signature utils
+
+After the refactor contracts and cow_amm still remain here because the cowprotocol/services still uses the legacy helper so its rust bindings do 
+not support the newer methods 

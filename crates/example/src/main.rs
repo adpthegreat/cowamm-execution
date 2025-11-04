@@ -1,5 +1,5 @@
 use std::sync::LazyLock;
-use ethcontract::{Address, H256, H160, U256, Bytes};
+use ethcontract::{Address, H256, H160, U256};
 use chrono::Utc;
 use ethrpc::http::HttpTransport;
 use std::time::Duration;
@@ -19,7 +19,10 @@ use {
     },
     num::BigUint,
     cow_amm::helper::Amm,
-    interactions::{join_pool::JoinPoolInteraction, exit_pool::ExitPoolInteraction},
+    interactions::{
+        encode_cowamm::encode_cowamm,
+        join_pool::JoinPoolInteraction, exit_pool::ExitPoolInteraction
+    },
     contracts::{contract, BCowPool, BCowHelper},
     api_client::{
         client::OrderBookApi,
@@ -28,51 +31,106 @@ use {
 };
 use reqwest::{Client, Url};
 
-use tycho_simulation::evm::protocol;
+use tycho_simulation::{
+    evm::protocol::{
+        cowamm::state::CowAMMState
+    },
+    tycho_common::{
+        simulation::protocol_sim::ProtocolSim,
+        Bytes,
+        models::{
+            token::Token,
+            Chain,
+        }
+    },
+    foundry_evm::revm::primitives::U256 as AlloyU256,
+    evm::protocol,
+};
 
 #[tokio::main]
 async fn main() {
     //join pool and exit pool encoding examples 
-    let addr: Address = Address::from_slice(&hex::decode("9bd702e05b9c97e4a4a3e47df1e0fe7a0c26d2f1").unwrap());
+    // https://github.com/propeller-heads/tycho-simulation/blob/main/examples/quickstart/main.rs#L533 - reference 
+
+    //simulate with get_amount_out - doesnt panic or hit limit, then it can execute , user can see amount_out before execution 
+
+    //In execution , recalculate interim swaps needed to fulfil order add as post or pre interaction where necessary, then 
+
+    // https://github.com/propeller-heads/tycho-simulation/blob/main/examples/quickstart/main.rs#L543 - reference
+
+    // Also if you would like to know how much limits you can swap on a pool 
+
+    //using a static CowAMMPoolState for the demonstration, ideally we use tycho indexer to fetch all the CowAMM Pools for a given pair, then 
+    //its hooked up to Tycho Simulation, then we simulate, then create order 
+
     let helper_addr: Address = Address::from_slice(&hex::decode("3FF0041A614A9E6Bf392cbB961C97DA214E9CB31").unwrap());
 
-    let sell_token: Address = Address::from_slice(&hex::decode("7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0").unwrap()); //wstETH
+    let token_in = Token::new(
+        &Bytes::from_str("0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB").unwrap(),
+        "COW",
+        18,
+        0,
+        &[Some(1_547_000_000_000_000_000)], //_000
+        Chain::Ethereum, 
+        100,
+    );
 
-     let exit_pool_interaction = ExitPoolInteraction {
-            b_cow_pool: contract!(BCowPool, addr.clone()), 
-            pool_amount_in: U256::from_dec_str("1000000000000000000").unwrap(), // 1e18
-            min_amounts_out: vec![
-                U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
-                U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
-            ],
-    };
+    let token_out = Token::new(
+        &Bytes::from_str("7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0").unwrap(), //wstETH
+        "wstETH",
+        18,
+        0,
+        &[Some(100_000_000_000_000_000)],
+        Chain::Ethereum,
+        100,
+    );
 
-    let encoded_exit = exit_pool_interaction.encode_exit();
+    let lp_token = Token::new(
+            &Bytes::from_str("0x9bd702E05B9c97E4A4a3E47Df1e0fe7A0C26d2F1").unwrap(),
+            "BCoW-50CoW-50wstETH",
+            18,
+            0,
+            &[Some(199_999_999_999_999_990)],
+            Chain::Ethereum,
+            100,
+    );
 
-    let join_pool_interaction = JoinPoolInteraction {
-            b_cow_pool: contract!(BCowPool, addr),
-            pool_amount_out: U256::from_dec_str("1000000000000000000").unwrap(), // 1e18
-            max_amounts_in: vec![
-                U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
-                U256::from_dec_str("500000000000000000").unwrap(), // 0.5e18
-            ],
-    };
+    let amount_in = BigUint::from(1000000000000000000 as usize);
 
-    let encoded_join = join_pool_interaction.encode_join();
+    //https://github.com/adpthegreat/tycho-simulation/blob/add_cowamm_simulation/src/evm/protocol/cowamm/state.rs#L59 - cow_amm state fields 
+    //https://github.com/adpthegreat/tycho-simulation/blob/add_cowamm_simulation/src/evm/protocol/cowamm/state.rs#L650
+    let pool_state = CowAMMState::new(
+            Bytes::from("0x9bd702E05B9c97E4A4a3E47Df1e0fe7A0C26d2F1"),
+            Bytes::from(token_in.address.clone()),
+            Bytes::from(token_out.address.clone()),
+            AlloyU256::from_str("1547000000000000000000").unwrap(), //COW liquidity
+            AlloyU256::from_str("100000000000000000").unwrap(), //wstETH liquidity
+            Bytes::from("0x9bd702E05B9c97E4A4a3E47Df1e0fe7A0C26d2F1"),
+            AlloyU256::from_str("199999999999999999990").unwrap(),
+            AlloyU256::from_str("1000000000000000000").unwrap(),
+            AlloyU256::from_str("1000000000000000000").unwrap(),
+            0,
+    );
+
+    let amount_out = pool_state
+        .get_amount_out(amount_in.clone(), &token_in, &lp_token)
+        .map_err(|e| eprintln!("Error calculating amount out for Pool: {e:?}"))
+        .ok();
+
+    println!("Amount out result : {:?}", amount_out);
 
     let binding = contract!(BCowHelper, helper_addr);
 
-    let amm = Amm::new(addr, &binding).await.unwrap();
+    let amm = Amm::new(helper_addr, &binding).await.unwrap(); 
+
+    //returns a template order
+    let template = encode_cowamm(amount_in, token_in.address, token_out.address, &pool_state, &amm).await.unwrap();
 
     // Get tokens traded by this AMM
     let tokens = amm.traded_tokens();
     println!("Traded tokens: {:?}", tokens);
 
     let sell_amount = U256::from(1_000_000_000u64);
-
-    // Get a template order
-    let mut template = amm.template_order_from_sell_amount(sell_token, sell_amount).await.unwrap();
-
     //Jit order returned from the amm
     println!("Order: {:?}", template.order);
     println!("Signature: {:?}", template.signature);
@@ -80,23 +138,6 @@ async fn main() {
     println!("Post interactions: {:?}", template.post_interactions);
 
     //The pre and post interactions are to be encoded into the solvers settlement 
-
-    //swap in cowamm (JitOrder) then join 
-    template.post_interactions.push(
-        InteractionData {
-            target: encoded_join.0,
-            value: encoded_join.1,
-            call_data: encoded_join.2.0.into()
-        }
-    );
-
-    //exit first then swap (JitOrder) superfluous token
-    template.pre_interactions.push( 
-        InteractionData {
-            target: encoded_exit.0,
-            value: encoded_exit.1,
-            call_data: encoded_exit.2.0.into(),
-    });
 
     let client = Client::builder()
                     .timeout(Duration::from_secs(10))
@@ -141,4 +182,12 @@ async fn main() {
     };
 
     let _ = ob_api.create_order(&order_creation).await.unwrap();
+
+    //check if state has changed
+    // let new_state = res
+    //         .new_state
+    //         .as_any()
+    //         .downcast_ref::<CowAMMState>()
+    //         .unwrap();
+
 }

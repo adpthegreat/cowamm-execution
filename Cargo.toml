@@ -4,13 +4,13 @@ members = ["crates/*"]
 
 [workspace.dependencies]
 # Git dependencies - path is relative to the git repository root
-ethrpc = { git = "https://github.com/cowprotocol/services", branch = "main" }
-observe = { git = "https://github.com/cowprotocol/services", branch = "main" }
-shared = { git = "https://github.com/cowprotocol/services", branch = "main" }
-testlib = { git = "https://github.com/cowprotocol/services", branch = "main" }
-model = { git = "https://github.com/cowprotocol/services", branch = "main" }
-number = { git = "https://github.com/cowprotocol/services", branch = "main" }
-app_data = { package = "app-data", git = "https://github.com/cowprotocol/services", branch = "main" }
+ethrpc = { git = "https://github.com/cowprotocol/services", rev = "d884bbe4db35f6d48f53cfeef856a72d7f50d302" }
+observe = { git = "https://github.com/cowprotocol/services", rev = "d884bbe4db35f6d48f53cfeef856a72d7f50d302" }
+shared = { git = "https://github.com/cowprotocol/services", rev = "d884bbe4db35f6d48f53cfeef856a72d7f50d302" }
+testlib = { git = "https://github.com/cowprotocol/services", rev = "d884bbe4db35f6d48f53cfeef856a72d7f50d302" }
+model = { git = "https://github.com/cowprotocol/services", rev = "d884bbe4db35f6d48f53cfeef856a72d7f50d302" }
+number = { git = "https://github.com/cowprotocol/services", rev = "d884bbe4db35f6d48f53cfeef856a72d7f50d302" }
+app_data = { package = "app-data", git = "https://github.com/cowprotocol/services", rev = "d884bbe4db35f6d48f53cfeef856a72d7f50d302" }
 
 tycho_simulation = { git = "https://github.com/adpthegreat/tycho-simulation", branch = "add_cowamm_simulation", package = "tycho-simulation", default-features = false, features = ["evm"]}
 
@@ -40,6 +40,7 @@ lazy_static = "1.5.0"
 maplit = "1.0.2"
 mockall = "0.13.1"
 num = "0.4.3"
+num-bigint = { version = "0.4.6", features = ["serde"] }
 ethcontract-generate = { git = "https://github.com/cowprotocol/ethcontract-rs", rev = "8e112a88988040cde6110379ee6d1be768a13244", default-features = false }
 ethcontract-mock = { git = "https://github.com/cowprotocol/ethcontract-rs", rev = "8e112a88988040cde6110379ee6d1be768a13244", default-features = false }
 primitive-types = "0.12"

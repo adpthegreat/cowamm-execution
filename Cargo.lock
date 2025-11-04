@@ -1014,7 +1014,7 @@ dependencies = [
 [[package]]
 name = "app-data"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "anyhow",
  "bytes-hex",
@@ -2229,7 +2229,7 @@ dependencies = [
 [[package]]
 name = "bytes-hex"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "const-hex",
  "serde",
@@ -2341,7 +2341,7 @@ checksum = "613afe47fcd5fac7ccf1db93babcb082c5994d996f20b8b159f2ad1658eb5724"
 [[package]]
 name = "chain"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "derive_more 1.0.0",
  "ethcontract",
@@ -2689,7 +2689,7 @@ dependencies = [
 [[package]]
 name = "contracts"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "alloy",
  "anyhow",
@@ -3074,7 +3074,7 @@ checksum = "2a2330da5de22e8a3cb63252ce2abb30116bf5265e89c0e01bc17015ce30a476"
 [[package]]
 name = "database"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "bigdecimal 0.3.1",
  "chrono",
@@ -3311,7 +3311,7 @@ dependencies = [
  "libc",
  "option-ext",
  "redox_users",
- "windows-sys 0.59.0",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
@@ -3697,7 +3697,7 @@ dependencies = [
 [[package]]
 name = "ethrpc"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "alloy",
  "anyhow",
@@ -4091,7 +4091,7 @@ dependencies = [
  "dyn-clone",
  "foundry-compilers-artifacts",
  "foundry-compilers-core",
- "itertools 0.13.0",
+ "itertools 0.14.0",
  "path-slash",
  "rayon",
  "semver 1.0.27",
@@ -5449,11 +5449,14 @@ dependencies = [
  "ethrpc",
  "futures 0.3.31",
  "maplit",
+ "model",
+ "num-bigint",
  "primitive-types",
  "serde",
  "shared",
  "tokio",
  "tracing",
+ "tycho-simulation",
  "web3",
 ]
 
@@ -5518,7 +5521,7 @@ checksum = "3640c1c38b8e4e43584d8df18be5fc6b0aa314ce6ebf51b53313d4306cca8e46"
 dependencies = [
  "hermit-abi 0.5.2",
  "libc",
- "windows-sys 0.52.0",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
@@ -6035,7 +6038,7 @@ dependencies = [
 [[package]]
 name = "model"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "anyhow",
  "app-data",
@@ -6280,7 +6283,7 @@ dependencies = [
 [[package]]
 name = "number"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "alloy",
  "anyhow",
@@ -6314,7 +6317,7 @@ dependencies = [
 [[package]]
 name = "observe"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "async-trait",
  "atty",
@@ -6540,10 +6543,10 @@ checksum = "04744f49eae99ab78e0d5c0b603ab218f515ea8cfe5a456d7629ad883a3b6e7d"
 [[package]]
 name = "order-validation"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "alloy",
- "contracts 0.1.0 (git+https://github.com/cowprotocol/services?branch=main)",
+ "contracts 0.1.0 (git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302)",
  "futures 0.3.31",
  "moka",
  "thiserror 1.0.69",
@@ -7346,7 +7349,7 @@ dependencies = [
 [[package]]
 name = "rate-limit"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "anyhow",
  "futures 0.3.31",
@@ -8527,7 +8530,7 @@ dependencies = [
 [[package]]
 name = "shared"
 version = "0.1.0"
-source = "git+https://github.com/cowprotocol/services?branch=main#f928b7d9c5df6aa8b5099a5cac7a3c51c5fc40d6"
+source = "git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302#d884bbe4db35f6d48f53cfeef856a72d7f50d302"
 dependencies = [
  "alloy",
  "anyhow",
@@ -8540,7 +8543,7 @@ dependencies = [
  "chrono",
  "clap",
  "const-hex",
- "contracts 0.1.0 (git+https://github.com/cowprotocol/services?branch=main)",
+ "contracts 0.1.0 (git+https://github.com/cowprotocol/services?rev=d884bbe4db35f6d48f53cfeef856a72d7f50d302)",
  "dashmap 6.1.0",
  "database",
  "derivative",
@@ -8781,7 +8784,7 @@ dependencies = [
  "derive_more 2.0.1",
  "dunce",
  "inturn",
- "itertools 0.10.5",
+ "itertools 0.14.0",
  "itoa",
  "normalize-path",
  "once_map",
@@ -8792,7 +8795,7 @@ dependencies = [
  "solar-config",
  "solar-data-structures",
  "solar-macros",
- "thiserror 1.0.69",
+ "thiserror 2.0.17",
  "tracing",
  "unicode-width",
 ]
@@ -8817,7 +8820,7 @@ dependencies = [
  "alloy-primitives",
  "bitflags 2.10.0",
  "bumpalo",
- "itertools 0.10.5",
+ "itertools 0.14.0",
  "memchr",
  "num-bigint",
  "num-rational",
@@ -9287,7 +9290,7 @@ dependencies = [
  "serde_json",
  "sha2 0.10.9",
  "tempfile",
- "thiserror 1.0.69",
+ "thiserror 2.0.17",
  "url",
  "zip",
 ]
@@ -10117,9 +10120,9 @@ dependencies = [
 
 [[package]]
 name = "tycho-client"
-version = "0.100.1"
+version = "0.101.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5860ab6823aa0f7c3623fd2560c6952fdb447e8f0394db935a87786d7c49e462"
+checksum = "045aa4b057a7c860beb8ded003e5141e7c76dd7f1215e0c2e8040e74acecc253"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -10146,9 +10149,9 @@ dependencies = [
 
 [[package]]
 name = "tycho-common"
-version = "0.100.1"
+version = "0.101.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b92fc75d64f9043d2a71fe0e9c6362a0197d32726c81ab50862803d291d14e00"
+checksum = "854d33a64911520dfb4d45a9874db04767a9f4e223d1a296cf4618646e139cf5"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -10172,9 +10175,9 @@ dependencies = [
 
 [[package]]
 name = "tycho-ethereum"
-version = "0.100.1"
+version = "0.101.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "99407c2d05011d0bc6ca599ea5dbe5df5a6478502c1ad7410e90938235d197c9"
+checksum = "f89d1094299294fcba7d4adc97035ec444c59a460041f63f11f29bc9797b00f0"
 dependencies = [
  "alloy",
  "alloy-rpc-types-trace",
@@ -10201,7 +10204,7 @@ dependencies = [
 [[package]]
 name = "tycho-simulation"
 version = "0.188.0"
-source = "git+https://github.com/adpthegreat/tycho-simulation?branch=add_cowamm_simulation#196abf46dc5312945bc67b59ed305688479bcfc4"
+source = "git+https://github.com/adpthegreat/tycho-simulation?branch=add_cowamm_simulation#3785ef631099a233ebc596f24ccfcfbf265b7afe"
 dependencies = [
  "alloy",
  "chrono",
@@ -10837,7 +10840,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
 dependencies = [
- "windows-sys 0.48.0",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
