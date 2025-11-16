@@ -2802,6 +2802,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "cowamm-execution"
+version = "0.1.0"
+
+[[package]]
 name = "cpufeatures"
 version = "0.2.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3738,28 +3742,6 @@ checksum = "9eaf56840ccbfb0b6d4fb27dd20d96a13586482923b280f5d6eb1a5fa980e818"
 dependencies = [
  "num-traits",
  "uint 0.10.0",
-]
-
-[[package]]
-name = "example"
-version = "0.1.0"
-dependencies = [
- "api_client",
- "app-data",
- "chrono",
- "contracts 0.1.0",
- "cow_amm",
- "ethcontract",
- "ethrpc",
- "hex",
- "interactions",
- "model",
- "num",
- "reqwest 0.12.24",
- "shared",
- "tokio",
- "tycho-simulation",
- "web3",
 ]
 
 [[package]]
@@ -5448,6 +5430,7 @@ dependencies = [
  "ethcontract",
  "ethrpc",
  "futures 0.3.31",
+ "hex",
  "maplit",
  "model",
  "num-bigint",

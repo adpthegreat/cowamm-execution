@@ -29,3 +29,8 @@ To test the example, run `cargo run --bin example`
 
 After the refactor contracts and cow_amm still remain here because the cowprotocol/services still uses the legacy helper so its rust bindings do 
 not support the newer methods 
+
+
+cargo build --workspace
+
+cargo run --example example

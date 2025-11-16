@@ -1,4 +1,4 @@
-use std::sync::LazyLock;
+use std::sync::{Arc, LazyLock};
 use ethcontract::{Address, H256, H160, U256};
 use chrono::Utc;
 use ethrpc::http::HttpTransport;
@@ -20,7 +20,7 @@ use {
     num::BigUint,
     cow_amm::helper::Amm,
     interactions::{
-        encode_cowamm::encode_cowamm,
+        encode_cowamm::{encode_cowamm, PoolState},
         join_pool::JoinPoolInteraction, exit_pool::ExitPoolInteraction
     },
     contracts::{contract, BCowPool, BCowHelper},
@@ -62,8 +62,6 @@ async fn main() {
 
     //using a static CowAMMPoolState for the demonstration, ideally we use tycho indexer to fetch all the CowAMM Pools for a given pair, then 
     //its hooked up to Tycho Simulation, then we simulate, then create order 
-
-    let helper_addr: Address = Address::from_slice(&hex::decode("3FF0041A614A9E6Bf392cbB961C97DA214E9CB31").unwrap());
 
     let token_in = Token::new(
         &Bytes::from_str("0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB").unwrap(),
@@ -119,16 +117,14 @@ async fn main() {
 
     println!("Amount out result : {:?}", amount_out);
 
-    let binding = contract!(BCowHelper, helper_addr);
-
-    let amm = Amm::new(helper_addr, &binding).await.unwrap(); 
+    let new_state: Arc<dyn PoolState> = Arc::new(pool_state);
 
     //returns a template order
-    let template = encode_cowamm(amount_in, token_in.address, token_out.address, &pool_state, &amm).await.unwrap();
+    let template = encode_cowamm(amount_in, token_in.address, token_out.address, new_state).await.unwrap();
 
     // Get tokens traded by this AMM
-    let tokens = amm.traded_tokens();
-    println!("Traded tokens: {:?}", tokens);
+    // let tokens = amm.traded_tokens();
+    // println!("Traded tokens: {:?}", tokens);
 
     let sell_amount = U256::from(1_000_000_000u64);
     //Jit order returned from the amm

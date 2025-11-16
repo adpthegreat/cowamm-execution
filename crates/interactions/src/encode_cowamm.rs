@@ -1,10 +1,14 @@
 use {
+    std::{
+        any::Any,
+        sync::Arc
+    },
+    hex,
     anyhow::{Context, Result},
     ethcontract::{Address, U256},
     contracts::BCowPool,
     model::{
         interaction::InteractionData,
-        signature::{EcdsaSignature}
     },
     cow_amm::helper::{
         TemplateOrder, Amm
@@ -14,7 +18,9 @@ use {
         exit_pool::ExitPoolInteraction
     },
     num_bigint::BigUint,
-    contracts::contract,
+    contracts::{
+        contract, BCowHelper
+    },
     tycho_simulation::{
         tycho_common::Bytes,
         evm::protocol::{
@@ -25,6 +31,21 @@ use {
     },
 };
 
+pub trait PoolState {
+   fn as_any(&self) -> &dyn std::any::Any;
+
+   fn as_any_mut(&mut self) -> &mut dyn Any;
+}
+
+impl PoolState for CowAMMState {
+    fn as_any(&self) -> &dyn std::any::Any {
+        self
+    }
+
+    fn as_any_mut(&mut self) -> &mut dyn Any {
+        self
+    }
+}
 
 /// Encodes a CowAMM swap for the three possible cases:
 /// 1. Token A -> Token B (normal swap)
@@ -36,7 +57,6 @@ use {
 /// * `token_in` - Address of the input token
 /// * `token_out` - Address of the output token
 /// * `pool_state` - Current state of the CowAMM pool for off-chain calculations
-/// * `amm` - AMM helper contract instance for generating orders
 ///
 /// # Returns
 /// A `TemplateOrder` with the main order and appropriate pre/post interactions
@@ -44,9 +64,18 @@ pub async fn encode_cowamm(
     amount_in: BigUint,
     token_in: Bytes,
     token_out: Bytes,
-    pool_state: &CowAMMState,
-    amm: &Amm,
+    pool_state: Arc<dyn PoolState>,
 ) -> Result<TemplateOrder> {
+    let helper_addr: Address = Address::from_slice(&hex::decode("3FF0041A614A9E6Bf392cbB961C97DA214E9CB31").unwrap());
+
+    let binding = contract!(BCowHelper, helper_addr);
+
+    let amm = Amm::new(helper_addr, &binding).await.unwrap(); 
+
+    let pool_state = pool_state
+            .as_any()
+            .downcast_ref::<CowAMMState>()
+            .unwrap();
     // Convert BigUint to U256
     let amount_in_u256 = biguint_to_u256(&amount_in); 
     
@@ -69,7 +98,7 @@ pub async fn encode_cowamm(
                 amount_in_u256,
                 token_in_addr,
                 token_out_addr,
-                amm,
+                &amm,
             ).await
         }
         
@@ -82,7 +111,7 @@ pub async fn encode_cowamm(
                 token_in_addr,
                 pool_address,
                 pool_state,
-                amm,
+                &amm,
             ).await
         }
         
@@ -95,7 +124,7 @@ pub async fn encode_cowamm(
                 token_out_addr,
                 pool_address,
                 pool_state,
-                amm,
+                &amm,
             ).await
         }
         

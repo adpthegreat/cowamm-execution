@@ -8,6 +8,7 @@ model = { workspace = true }
 shared = { workspace = true }
 contracts = { path = "../contracts" }
 cow_amm = { path = "../cow_amm" }
+hex = { workspace = true }
 ethrpc = { workspace = true }
 api_client = { path = "../api_client" }
 alloy = { workspace = true }
