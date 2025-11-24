@@ -1,18 +1,17 @@
-// https://github.com/cowprotocol/services/blob/7273c526eada6c3f6eb351949048d22a3e7d520d/crates/driver/src/domain/competition/solution/encoding.rs
 use {
     anyhow::{Context, Result},
     ethcontract::{Address, Bytes, U256, errors::MethodError},
     contracts::{BCowHelper},
-    super::types::{SignatureCheck, SignatureValidating},
-    shared::{
-        app_data::app_data_hash::AppDataHash,
-        models::{
-            DomainSeparator,
-            interaction::InteractionData,
-            order::{BuyTokenDestination, OrderData, OrderKind, SellTokenSource},
-            signature::{Signature, hashed_eip712_message},
-        }
+    model::{
+        DomainSeparator,
+        interaction::InteractionData,
+        order::{BuyTokenDestination, OrderData, OrderKind, SellTokenSource},
+        signature::{Signature, hashed_eip712_message},
     },
+    app_data::{AppDataHash},
+    shared::signature_validator::{
+        SignatureCheck, SignatureValidating
+    }
 };
 
 #[derive(Clone, Debug)]
@@ -91,6 +90,7 @@ impl Amm {
                 hash,
                 signature: template.signature.to_bytes(),
                 interactions: template.pre_interactions.clone(),
+                balance_override: None,
             })
             .await
             .context("invalid signature")?;
@@ -118,6 +118,7 @@ impl Amm {
                 hash,
                 signature: template.signature.to_bytes(),
                 interactions: template.pre_interactions.clone(),
+                balance_override: None,
             })
             .await
             .context("invalid signature")?;
@@ -145,6 +146,7 @@ impl Amm {
                 hash,
                 signature: template.signature.to_bytes(),
                 interactions: template.pre_interactions.clone(),
+                balance_override: None,
             })
             .await
             .context("invalid signature")?;

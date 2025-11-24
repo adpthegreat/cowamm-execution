@@ -1,20 +1,23 @@
 use {
-    crate::{
-        number::serialization::HexOrDecimalU256,
-        models::order::OrderUid,
-    },
     derive_more::Debug as DeriveDebug,
+    ethcontract::{
+        transaction::TransactionBuilder,
+        Address,
+        Bytes,
+    },
     hex_literal::hex,
+    model::order::OrderUid,
     num::BigUint,
+    number::serialization::HexOrDecimalU256,
     primitive_types::{H160, H256, U256},
-    serde::{Deserialize, Deserializer, Serialize, Serializer, de},
-    serde_with::{DisplayFromStr, serde_as},
-    ethcontract::{Address},
+    serde::{de, Deserialize, Deserializer, Serialize, Serializer},
+    serde_with::{serde_as, DisplayFromStr},
     std::{
-        collections::{HashSet, HashMap},
+        collections::{HashMap, HashSet},
         fmt::{self, Debug, Display},
         str::FromStr,
     },
+    web3::Transport,
 };
 
 #[serde_as]
